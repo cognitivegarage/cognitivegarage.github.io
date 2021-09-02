@@ -2,6 +2,13 @@
 <html>
    <head>
       <title>CognitiveGarage</title>
+      <link rel="stylesheet" href="annotator/css/jsoneditor.css">
+      <link rel="stylesheet" href="https://rawgit.com/vchahalibm/NewsEdge/master/www/css/font-awesome.min.css" />
+      <link rel="stylesheet" href="https://rawgit.com/vchahalibm/NewsEdge/master/www/css/jquery.mobile.min.css" />
+      <link rel="stylesheet" href="https://rawgit.com/vchahalibm/NewsEdge/master/www/css/waves.min.css" />
+      <link rel="stylesheet" href="https://rawgit.com/vchahalibm/NewsEdge/master/www/css/animate.css" />
+      <link rel="stylesheet" href="https://rawgit.com/vchahalibm/NewsEdge/master/www/css/nativedroid2.css" />
+      
       <style>
         .vizshadow {
           -webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
@@ -27,7 +34,7 @@
                      <div class='col-xs-8'>
                         <div class='box profile-text'>
                            <strong id='loggedProfile'></strong>
-                           <span class='subline'>AI4Rx</span>
+                           <span class='subline'>CognitiveGarage</span>
                         </div>
                      </div>
                   </div>
@@ -48,123 +55,69 @@
             <div data-role="header" data-position="fixed" class="wow fadeInDown" data-wow-delay="0.2s" style="background-color:white;color:black;height: 6%;box-shadow: none !important;">
                <a href="#bottomsheet" class="ui-btn ui-btn-right wow fadeIn" data-wow-delay='1.2s'><i class="zmdi zmdi-more-vert vizshadow" style="color:black;"></i></a>
                <a href="#leftpanel" class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.8s'><i class="zmdi zmdi-menu vizshadow" style="color:black;"></i></a>
-               <h1 class="wow fadeIn vizshadow" data-wow-delay='0.4s' style="font-weight:300;font-size:20px;padding: 0.1em 0px;text-align:center;" lang="translate" caption="title">AI4Rx: The Health Genie</h1>
+               <h1 class="wow fadeIn vizshadow" data-wow-delay='0.4s' style="font-weight:300;font-size:20px;padding: 0.1em 0px;text-align:center;" lang="translate" caption="title">Cognitive Garage: Your AI Partner for Digital Transformation</h1>
+               <ul data-role="nd2tabs" data-swipe="false">
+                  <li id='assessmentTab' data-tab="profile" data-tab-active="true" lang="translate" caption="tab1" style="color: black;">Health</li>
+                  <li id='summaryTab' data-tab="analysis" lang="translate" caption="tab2" style="color: black;">Govt</li>
+               </ul>
             </div>
             <!-- header panel -->
-            <div id='mainDivID' role="main" class="ui-content" data-inset="false" style="background-image: url('./annotator/img/avatarBig.png');background-repeat: no-repeat;background-attachment: local;background-position: center top;background-size: 250px 250px;">
+            <div id='mainDivID' role="main" class="ui-content" data-inset="false" style="">
                <div data-role="nd2tab" data-tab="profile" ng-show="assessmentView">
-                  <div id="chatAvatar" class="nd2-card" style="margin-top: calc(0% + 230px);display: ;max-width: calc(100% - 30px);box-shadow: none;" >
-                     <div class="card-media">
-                        <img src="./annotator/img/cg.png">
-                        <div class="card-media-overlay with-background">
-                           <div class="card-title has-supporting-text">
-                              <h3 class="card-primary-title" lang="translate" caption="subtitle1">AI Adaptive Health</h3>
-                              <h5 class="card-subtitle" lang="translate" caption="subtitle2">AI Driven Interactive Health Assessment </h5>
-                           </div>
-                           <div class="card-action">
-                              <div class="row between-xs">
-                                 <div class="col-xs-12">
-                                    <div class="box">
-                                       <i id="refreshDecisionIcon" class="fa fa-comments-o" style="display:none;"></i>
-                                       <a href="#" id="refreshAssesmentIcon" class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button" lang="translate" caption="start">Start Assessment</a>
-                                       <a href="#" id="showSummaryIcon" class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button" ng-show="summaryView">Show Summary</a>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div id="welcomechat" class="conv-form-wrapper" style="display:none">
-                     <form action="" method="GET" class="hidden">
-                        <select data-conv-question="☊ Hello! I am AI4Rx BOT, your AI assistant for health assessment. Let's get you started" name="first-question" lang="translate" caption="chatStart">
-                           <option value="Sure" lang="translate" caption="chatOpt2">Sure!</option>
-                        </select>
-                     </form>
-                  </div>
-                  <div id="chat" style="margin-top: 5%;display:none" class="col-12">
-                     <form action="" method="GET" class="hidden">
-                        <select data-conv-question="☊ Hello! I am AI4Rx BOT, your AI assistant for health assessment. Choose the best answer for the following questions" name="first-question" lang="translate" caption="chatStart">
-                           <option value="end" lang="translate" caption="chatOpt1">Not now</option>
-                           <option value="Sure" lang="translate" caption="chatOpt2">Sure!</option>
-                        </select>
-                     </form>
-                  </div>
-                  <a id="restartChat" href="#" class="ui-btn ui-mini ui-btn-inline ui-btn-icon-block waves-effect waves-button waves-effect waves-button" style="position: absolute;top: 1%;right: 1%;display:none;" lang="translate" caption="reassess"><i class="zmdi zmdi-replay zmd-2x"></i>Reassess </a>
+                   <div class="row">
+                      <div id="healthAvatar" class="nd2-card" style="" >
+                         <div class="card-media">
+                            <img src="./img/avatarBig.png">
+                            <div class="card-media-overlay with-background">
+                               <div class="card-title has-supporting-text">
+                                  <h3 class="card-primary-title" lang="translate" caption="subtitle1">AI Adaptive Health</h3>
+                                  <h5 class="card-subtitle" lang="translate" caption="subtitle2">AI Driven Interactive Health Assessment </h5>
+                               </div>
+                               <div class="card-action">
+                                  <div class="row between-xs">
+                                     <div class="col-xs-12">
+                                        <div class="box">
+                                           <i id="refreshDecisionIcon" class="fa fa-comments-o" style="display:none;"></i>
+                                           <a href="https://knowledge-engine.easygov.co.in/health" id="refreshAssesmentIcon" class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button" lang="translate" caption="start">Start Assessment</a>
+                                        </div>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                      <div id="botAvatar" class="nd2-card" style="" >
+                         <div class="card-media">
+                            <img src="./img/cg.png">
+                            <div class="card-media-overlay with-background">
+                               <div class="card-title has-supporting-text">
+                                  <h3 class="card-primary-title" lang="translate" caption="subtitle1">Knowledge Design for Healthcare</h3>
+                                  <h5 class="card-subtitle" lang="translate" caption="subtitle2">Knowledge Graph Driven Healtcare Analysis </h5>
+                               </div>
+                               <div class="card-action">
+                                  <div class="row between-xs">
+                                     <div class="col-xs-12">
+                                        <div class="box">
+                                           <i id="refreshKnowledgeIcon" class="fa fa-comments-o" style="display:none;"></i>
+                                           <a href="#" id="refreshAssesmentIcon" class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button" lang="translate" caption="start">Design Assessment</a>
+                                        </div>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
                </div>
                <!-- /profile -->
                <div data-role="nd2tab" data-tab="analysis" ng-show="summaryView">
                   <div id='assesmentReport' class="nd2-card" style="box-shadow: none;max-width: calc(100% - 30px);">
                      <div class="card-media">
-                        <img style="height: 600px;width: auto;max-width: 100%;max-height: 800px;marg" src="">
-                        <div class="card-media-overlay with-background" style="top: 1%;background-color: transparent;background: transparent;overflow: scroll;">
-                           <div class="card-title has-supporting-text">
-                              <h3 class="card-primary-title" style="color: darkblue;" lang="translate" caption="summaryTitle">Health Assessment</h3>
-                              <hr style="border-color: darkblue;border-width:3px;">
-                              </hr>
-                              <h5 class="card-subtitle" style="color: darkblue;" lang="translate" caption="summarySubtitle">AI Driven Interactive Health Assessment </h5>
-                           </div>
-                           <div class="card-title has-supporting-text" style="padding: 4px 16px 3px 16px;">
-                              <h5 id="doctorType" class="card-subtitle" style="color: darkblue;" lang="translate" caption="doctor">Doctor </h5>
-                              <h5 id="testType" class="card-subtitle" style="color: darkblue;" lang="translate" caption="test">Tests </h5>
-                              <h5 id="diseaseType" class="card-subtitle" style="color: darkblue;" lang="translate" caption="disease">Likely Ailment </h5>
-                           </div>
-                           <div id="patientInputSeq" data-role="collapsible" data-inset="false" style="margin-left: 1%;margin-top: 5%;">
-                              <h4 lang="translate" style="font-size: small;">Patient Q&A Selections</h4>
-                              <fieldset style="padding: 0.5em;" data-role="controlgroup" class="ui-controlgroup ui-controlgroup-vertical ui-corner-all">
-                                 <div role="heading" class="ui-controlgroup-label">
-                                    <legend>Disease History</legend>
-                                 </div>
-                                 <div id='DECIDER_HIST' class="ui-controlgroup-controls" style="flex-direction: row;display: flex;flex-wrap: wrap;">
-                                 </div>
-                                 <div role="heading" class="ui-controlgroup-label">
-                                    <legend>Other History</legend>
-                                 </div>
-                                 <div id='DECIDER_MAIN' class="ui-controlgroup-controls" style="flex-direction: row;display: flex;flex-wrap: wrap;">
-                                 </div>
-                                 <div role="heading" class="ui-controlgroup-label">
-                                    <legend>Pain History</legend>
-                                 </div>
-                                 <div id='DECIDER_PAIN' class="ui-controlgroup-controls" style="flex-direction: row;display: flex;flex-wrap: wrap;">
-                                 </div>
-                                 <div role="heading" class="ui-controlgroup-label">
-                                    <legend>Additional History</legend>
-                                 </div>
-                                 <div id='DECIDER_ADDL' class="ui-controlgroup-controls" style="flex-direction: row;display: flex;flex-wrap: wrap;">
-                                 </div>
-                                 <div role="heading" class="ui-controlgroup-label" style="margin-bottom: 15px;margin-top: 10px;">
-                                    <legend>Other Symptoms</legend>
-                                 </div>
-                                 <div id='SYMPTOMS' class="ui-controlgroup-controls" style="">
-                                 </div>
-                              </fieldset>
-                              <div style="position: absolute;top: 20%;">
-                                 <div class="col-10">
-                                    <div class="row  border border-primary row" id='DECIDER_HIST_'>
-                                    </div>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="row  border border-primary row" id='DECIDER_MAIN_'>
-                                    </div>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="row  border border-primary row" id='DECIDER_PAIN_'>
-                                    </div>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="row  border border-primary row" id='DECIDER_ADDL_'>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
                      </div>
                   </div>
                   <button id="restartAssesment" class="ui-btn-raised clr-warning ui-btn ui-btn-inline ui-mini waves-effect waves-button waves-effect waves-button" style="position: absolute;bottom: 1%;right: 1%;" lang="translate" caption="reassess1"><i class="zmdi zmdi-comments zmd-1x"></i>  Reassess</button>
                </div>
                <!-- /analysis -->
-               <div id="snackbar">Some Notification text message..</div>
-               <button class=" add-button ui-btn-raised clr-warning waves-effect waves-button waves-effect waves-button ui-btn ui-btn-inline ui-mini waves-effect waves-button" style="position: absolute;bottom: 1%;right: 1%;background-color:black;" lang="translate" caption="homescreen"><i class="zmdi zmdi-apps zmd-1x"></i> ADD TO HOME SCREEN</button>               
             </div>
          </div>
       </div>
@@ -173,13 +126,7 @@
       <script src="https://rawgit.com/vchahalibm/NewsEdge/master/www/js/jquery.mobile.min.js"></script>
       <script src="https://rawgit.com/vchahalibm/NewsEdge/master/www/js/angular.min.js"></script>
       <script src="https://rawgit.com/vchahalibm/NewsEdge/master/www/js/nativedroid2.js"></script>
-      <script type="text/javascript" src="https://yaireo.github.io/tagify/dist/jQuery.tagify.min.js"></script>
-      <script src="https://demos.codexworld.com/3rd-party/jsPDF/dist/jspdf.min.js"></script>
-      <script type="text/javascript" src="dist/jquery.convform.js"></script>
-      <script type="text/javascript" src="https://eduardotkoller.github.io/convForm/dist/autosize.min.js"></script>
-      <script type="text/javascript" src="annotator/js/kengine.ai4rx.min.js"></script>
-      <script type="text/javascript" src="annotator/js/inference.min.js"></script>
-      
+
       <script>
          var appScope = null;
      
@@ -241,60 +188,8 @@
          
            }); 
            
-           // Code to handle PWA install prompt 
-           let deferredPrompt;
-           const addBtn = document.querySelector('.add-button');
-           addBtn.style.display = 'none';
-            
-            window.addEventListener('beforeinstallprompt', (e) => {
-              // Prevent Chrome 67 and earlier from automatically showing the prompt
-              e.preventDefault();
-              // Stash the event so it can be triggered later.
-              deferredPrompt = e;
-              // Update UI to notify the user they can add to home screen
-              addBtn.style.display = 'block';
-            
-              addBtn.addEventListener('click', (e) => {
-                // hide our user interface that shows our A2HS button
-                addBtn.style.display = 'none';
-                // Show the prompt
-                deferredPrompt.prompt();
-                // Wait for the user to respond to the prompt
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                      console.log('User accepted the A2HS prompt');
-                    } else {
-                      console.log('User dismissed the A2HS prompt');
-                    }
-                    deferredPrompt = null;
-                  });
-              });
-            });           
-            window.addEventListener('appinstalled', (evt) => {
-              // Log install to analytics
-              console.log('INSTALL: Success');
-            });
-            window.addEventListener('DOMContentLoaded', () => {
-              let displayMode = 'browser tab';
-              if (navigator.standalone) {
-                displayMode = 'standalone-ios';
-              }
-              if (window.matchMedia('(display-mode: standalone)').matches) {
-                displayMode = 'standalone';
-              }
-              // Log launch display mode to analytics
-              console.log('DISPLAY_MODE_LAUNCH:', displayMode);
-              
-              window.matchMedia('(display-mode: standalone)').addListener((evt) => {
-                let displayMode = 'browser tab';
-                if (evt.matches) {
-                  displayMode = 'standalone';
-                }
-                // Log display mode change to analytics
-                console.log('DISPLAY_MODE_CHANGED', displayMode);
-              });              
-            });            
-                     
+
+
            $scope.TabFunction = function(tabID){
            	switch(tabID) {
            	  case 1:
@@ -345,60 +240,7 @@
            }
                   
            $(document).ready(function() {
-                appScope = getScope("MainController");
-                
-                if(navigator.serviceWorker !== undefined) {
-                 navigator.serviceWorker
-                 .register('service-worker.js')
-                 .then(function() { console.log("Service Worker Registered"); })
-                 .catch(function(err){
-                 console.error(err);
-                 });
-                }            
-                
-                
-                var urlParams = getParams(window.location.href);
-                if(urlParams.reset){
-                    localStorage.removeItem("ai4rx"); 
-                }
-                // Check browser support
-                if (typeof(Storage) !== "undefined") {
-                    if(localStorage.getItem("ai4rx")){
-                        // Retrieve
-                        var retrievedObject = localStorage.getItem("ai4rx");
-                        var ai4rxObj = JSON.parse(retrievedObject);
-                        $scope.kProfile = true;
-                        $scope.uProfile = ai4rxObj.profile;
-                        
-                        changeLanguage("en");
-                        $('#loggedProfile').html($scope.uProfile.name);
-                        
-                        convForm = $('#welcomechat form');
-                        convForm.html('<select data-conv-question="☊ Welcome back '+$scope.uProfile.name+'! Do you want to proceed with health assessment or configure the App?" name="first-question" lang="translate" caption="chatStart"><option value="proceed" lang="translate" caption="chatOpt3">Health Assessment!</option><option value="config" lang="translate" caption="chatOpt4">App Configuration!</option></select></select>');
-                        //userInputAdjustment("conv-form-wrapper",0);
-                        //userInputAdjustment("welcomechat",0);
-                        //userInputAdjustment("chat",1);
-                        //WelcomeBoT();
-                        //RefreshAssesment();
-                        
-                        $("#tr_button").click(function(){
-                            changeLanguage("hn");
-                        });
-                    
-                        $("#eng_button").click(function(){
-                            changeLanguage("en");
-                        });                        
-                    }else{
-                        // Default Language
-                        changeLanguage("en");
-                        //userInputAdjustment();
-                        //WelcomeBoT();
-                        //RefreshAssesment();
-                        //$scope.WalkthroughHelp();
-                    }
-                } else {
-                  //document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-                }               
+
            });           
            
          });		
