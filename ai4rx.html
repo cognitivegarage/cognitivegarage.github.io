@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+<html>
+   <head>
+      <title>AI4RX</title>
+      <link rel="stylesheet" href="annotator/css/jsoneditor.css">
+      <link rel="stylesheet" href="https://rawgit.com/vchahalibm/NewsEdge/master/www/css/font-awesome.min.css" />
+      <link rel="stylesheet" href="https://rawgit.com/vchahalibm/NewsEdge/master/www/css/jquery.mobile.min.css" />
+      <link rel="stylesheet" href="https://rawgit.com/vchahalibm/NewsEdge/master/www/css/waves.min.css" />
+      <link rel="stylesheet" href="https://rawgit.com/vchahalibm/NewsEdge/master/www/css/animate.css" />
+      <link rel="stylesheet" href="https://rawgit.com/vchahalibm/NewsEdge/master/www/css/nativedroid2.css" />
+      
+      <style>
+        .vizshadow {
+          -webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+          filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+          /* Similar syntax to box-shadow */
+        }      
+       
+      </style>
+   </head>
+   <body>
+      <div ng-app="AnalyticsSolutionsApp" ng-controller="MainController" id="MainControllerDIV">
+         <div data-role="page">
+            <!-- left panel -->
+            <div data-role="panel" id="leftpanel" data-display="overlay" data-position-fixed="true" >
+               <div class='nd2-sidepanel-profile wow fadeInDown'>
+                  <img class='profile-background' src="./annotator/img/avatarBig.png" style="width: 35%;left: 65%;"/>
+                  <div class="row">
+                     <div class='col-xs-4 center-xs'>
+                        <div class='box'>
+                           <img class="profile-thumbnail" src="./img/demo_female.png" ng-click="scatterdataFile = 600"/>
+                        </div>
+                     </div>
+                     <div class='col-xs-8'>
+                        <div class='box profile-text'>
+                           <strong id='loggedProfile'></strong>
+                           <span class='subline'>CognitiveGarage</span>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <button id="reDoAssesment" class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button" lang="translate" caption="reDoAssesment"><i class="zmdi zmdi-comments ui-pull-left"></i> Health Assessment</button>
+               <button id="reDoSummary" class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button" lang="translate" caption="reDoSummary"><i class="zmdi zmdi-file ui-pull-left"></i> Health Summary</button>
+            </div>
+            <!-- /left panel -->
+            <!-- bottom panel -->
+            <div data-role="panel" id="bottomsheet" data-animate="true" data-position='bottom' data-display="overlay" style="max-height: 90%;">
+               <div class='row around-xs'>
+                  <button id="restartChat" class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button"><i class="zmdi zmdi-comments ui-pull-left"></i> Start Chat</button>
+                  <button id="saveReport" class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button"><i class="zmdi zmdi-cloud-download ui-pull-left"></i> Save Assesment</button>
+               </div>
+            </div>
+            <!-- bottom panel -->
+            <!-- header panel -->
+            <div data-role="header" data-position="fixed" class="wow fadeInDown" data-wow-delay="0.2s" style="background-color:white;color:black;height: 6%;box-shadow: none !important;">
+               <a href="#bottomsheet" class="ui-btn ui-btn-right wow fadeIn" data-wow-delay='1.2s'><i class="zmdi zmdi-more-vert vizshadow" style="color:black;"></i></a>
+               <a href="#leftpanel" class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.8s'><i class="zmdi zmdi-menu vizshadow" style="color:black;"></i></a>
+               <h1 class="wow fadeIn vizshadow" data-wow-delay='0.4s' style="font-weight:300;font-size:20px;padding: 0.1em 0px;text-align:center;" lang="translate" caption="title">AI4RX: Your AI Partner for Digital Transformation</h1>
+               <ul data-role="nd2tabs" data-swipe="false">
+                  <li id='assessmentTab' data-tab="profile" data-tab-active="true" lang="translate" caption="tab1" style="color: black;">Health</li>
+                  <li id='summaryTab' data-tab="analysis" lang="translate" caption="tab2" style="color: black;">Govt</li>
+               </ul>
+            </div>
+            <!-- header panel -->
+            <div id='mainDivID' role="main" class="ui-content" data-inset="false" style="">
+               <div data-role="nd2tab" data-tab="profile" ng-show="assessmentView">
+                   <div class="row">
+                      <div id="healthAvatar" class="nd2-card" style="" >
+                         <div class="card-media">
+                            <img src="./annotator/img/avatarBig.png">
+                            <div class="card-media-overlay with-background">
+                               <div class="card-title has-supporting-text">
+                                  <h3 class="card-primary-title" lang="translate" caption="subtitle1">AI Adaptive Health</h3>
+                                  <h5 class="card-subtitle" lang="translate" caption="subtitle2">AI Driven Interactive Health Assessment </h5>
+                               </div>
+                               <div class="card-action">
+                                  <div class="row between-xs">
+                                     <div class="col-xs-12">
+                                        <div class="box">
+                                           <i id="refreshDecisionIcon" class="fa fa-comments-o" style="display:none;"></i>
+                                           <a href="https://knowledge-engine.easygov.co.in/health" id="refreshAssesmentIcon" class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button" lang="translate" caption="start">Start Assessment</a>
+                                        </div>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                      <div id="botAvatar" class="nd2-card" style="" >
+                         <div class="card-media">
+                            <img src="./annotator/img/cg.png">
+                            <div class="card-media-overlay with-background">
+                               <div class="card-title has-supporting-text">
+                                  <h3 class="card-primary-title" lang="translate" caption="subtitle1">Knowledge Design for Healthcare</h3>
+                                  <h5 class="card-subtitle" lang="translate" caption="subtitle2">Knowledge Graph Driven Healtcare Analysis </h5>
+                               </div>
+                               <div class="card-action">
+                                  <div class="row between-xs">
+                                     <div class="col-xs-12">
+                                        <div class="box">
+                                           <i id="refreshKnowledgeIcon" class="fa fa-comments-o" style="display:none;"></i>
+                                           <a href="#" id="refreshAssesmentIcon" class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button" lang="translate" caption="start">Design Assessment</a>
+                                        </div>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+               </div>
+               <!-- /profile -->
+               <div data-role="nd2tab" data-tab="analysis" ng-show="summaryView">
+                  <div id='assesmentReport' class="nd2-card" style="box-shadow: none;max-width: calc(100% - 30px);">
+                     <div class="card-media">
+                     </div>
+                  </div>
+                  <button id="restartAssesment" class="ui-btn-raised clr-warning ui-btn ui-btn-inline ui-mini waves-effect waves-button waves-effect waves-button" style="position: absolute;bottom: 1%;right: 1%;" lang="translate" caption="reassess1"><i class="zmdi zmdi-comments zmd-1x"></i>  Reassess</button>
+               </div>
+               <!-- /analysis -->
+            </div>
+         </div>
+      </div>
+      <script src="https://rawgit.com/vchahalibm/NewsEdge/master/www/js/jquery.min.js"></script>
+      <script src="https://rawgit.com/vchahalibm/NewsEdge/master/www/js/jquery-ui.min.js"></script>
+      <script src="https://rawgit.com/vchahalibm/NewsEdge/master/www/js/jquery.mobile.min.js"></script>
+      <script src="https://rawgit.com/vchahalibm/NewsEdge/master/www/js/angular.min.js"></script>
+      <script src="https://rawgit.com/vchahalibm/NewsEdge/master/www/js/nativedroid2.js"></script>
+
+      <script>
+         var appScope = null;
+     
+         var app = angular.module('AnalyticsSolutionsApp', []); 
+         app.config(function($interpolateProvider) {
+           $interpolateProvider.startSymbol('[[');
+           $interpolateProvider.endSymbol(']]');
+         });
+         
+         app.filter('unique', function() {
+          return function(collection, keyname) {
+             var output = [], 
+                 keys = [];
+         
+             angular.forEach(collection, function(item) {
+                 var key = item[keyname];
+                 if(keys.indexOf(key) === -1) {
+                     keys.push(key);
+                     output.push(item);
+                 }
+             });
+         
+             return output;
+          };
+         });      
+         
+         app.controller('MainController', function($scope,$log,$http) {
+           $scope.summaryView = false;
+           $scope.assessmentView = true;
+           $scope.login = false;
+           $scope.talking = false;
+           $scope.currentlyAnimating = false;
+           $scope.Idle = '';
+           $scope.possibleAnims = '';
+           $scope.lastStyleMargin = 1000;
+           $scope.FirstStyleStep = 1;
+           $scope.SwipeOrigin = '';
+           $scope.ThresholdReached = 0;
+           $scope.runTimeSequence = [];
+           $scope.uProfile = {};
+           $scope.kProfile = false;
+           
+           $(document).on("touchmove", ".dragscroll", function (e, ui) {
+         
+                /* prevent options from scrolling */
+                e.preventDefault();
+            });
+           $('#leftpanel').on('panelbeforeopen', function(e) {
+                /* prevent options from scrolling */
+                if($scope.SwipeOrigin == 'PAGESWIPE'){
+                    e.preventDefault();
+                    $('#leftpanel').panel("close");
+                    $scope.SwipeOrigin = '';
+                }
+            });
+           $("div[role=main]").on("swipeleft swiperight", function (e) {
+                $('#leftpanel').panel("close");
+                $scope.SwipeOrigin = 'PAGESWIPE';
+         
+           }); 
+           
+
+
+           $scope.TabFunction = function(tabID){
+           	switch(tabID) {
+           	  case 1:
+                       document.getElementById('Tknowledge').style.display = "";
+                       document.getElementById('Tinferance').style.display = "none";
+                       document.getElementById('Tdependency').style.display = "none";
+                       document.getElementById('Tact').style.display = "none";
+                       
+                       document.getElementById('Lknowledge').className = "active vizshadow";
+                       document.getElementById('Linferance').className = "vizshadow";
+                       document.getElementById('Ldependency').className = "vizshadow";                    
+                       document.getElementById('Lact').className = "vizshadow";
+           	    break;
+           	  case 2:
+                       document.getElementById('Tknowledge').style.display = "none";
+                       document.getElementById('Tinferance').style.display = "";
+                       document.getElementById('Tdependency').style.display = "none";                    
+                       document.getElementById('Tact').style.display = "none";
+                       
+                       document.getElementById('Lknowledge').className = "vizshadow";
+                       document.getElementById('Linferance').className = "active vizshadow";
+                       document.getElementById('Ldependency').className = "vizshadow";                    
+                       document.getElementById('Lact').className = "vizshadow";                
+           	    break;
+           	  case 3:
+                       document.getElementById('Tknowledge').style.display = "none";
+                       document.getElementById('Tinferance').style.display = "none";
+                       document.getElementById('Tdependency').style.display = "";                    
+                       document.getElementById('Tact').style.display = "none";
+                       
+                       document.getElementById('Lknowledge').className = "vizshadow";
+                       document.getElementById('Linferance').className = "vizshadow";
+                       document.getElementById('Ldependency').className = "active vizshadow";                    
+                       document.getElementById('Lact').className = "vizshadow";                
+           	    break;
+           	  case 4:
+                       document.getElementById('Tknowledge').style.display = "none";
+                       document.getElementById('Tinferance').style.display = "none";
+                       document.getElementById('Tdependency').style.display = "none";                    
+                       document.getElementById('Tact').style.display = "";
+                       
+                       document.getElementById('Lknowledge').className = "vizshadow";
+                       document.getElementById('Linferance').className = "vizshadow";
+                       document.getElementById('Ldependency').className = "vizshadow";                    
+                       document.getElementById('Lact').className = "active vizshadow";                
+           	    break;        	    
+           	} 
+           }
+                  
+           $(document).ready(function() {
+
+           });           
+           
+         });		
+         
+      </script>      
+   </body>
+</html>
