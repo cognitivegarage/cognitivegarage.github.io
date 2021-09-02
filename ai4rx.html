@@ -1,21 +1,176 @@
 <!DOCTYPE HTML>
 <html>
    <head>
-      <title>AI4RX</title>
-      <link rel="stylesheet" href="annotator/css/jsoneditor.css">
+      <title>AI4Rx</title>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+      <meta name="description" content="AI Driven Health Assessment through Interactive Digital Nurse" />
+      <meta name="keywords" content="AI, Rx, health assessment, digital nurse, chatbot, ML" />
+      <meta name="author" content="AI4Rx" />
+      <meta property="og:title" content="AI4Rx" />
+      <meta property="og:description" content="AI Driven Health Assessment through Interactive Digital Nurse" />
+      <meta property="og:url" content="http://ai4rx.co.in/" />
+      <meta property="og:image" content="http://ai4rx.co.in/fb.png" />
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="default">
+      <link rel="manifest" href="https://knowledge-engine.easygov.co.in/pwa/manifest.json">
+      <meta name="theme-color" content="#000000" />
+      
+      <link rel="apple-touch-icon" sizes="180x180" href="https://knowledge-engine.easygov.co.in/annotator/img/apple-touch-icon.png">
+      <link rel="icon" type="image/png" sizes="32x32" href="https://knowledge-engine.easygov.co.in/annotator/img/favicon-32x32.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="https://knowledge-engine.easygov.co.in/annotator/img/favicon-16x16.png">
+      <link rel="mask-icon" href="https://knowledge-engine.easygov.co.in/annotator/img/safari-pinned-tab.svg" color="#5bbad5">
+      <meta name="msapplication-TileColor" content="#da532c">
+      <meta name="theme-color" content="#ffffff">      
+      
+      <link rel="shortcut icon" href="https://knowledge-engine.easygov.co.in/annotator/img/favicon.ico">
+      <link rel="stylesheet" href="https://knowledge-engine.easygov.co.in/annotator/css/jsoneditor.css">
       <link rel="stylesheet" href="https://rawgit.com/vchahalibm/NewsEdge/master/www/css/font-awesome.min.css" />
       <link rel="stylesheet" href="https://rawgit.com/vchahalibm/NewsEdge/master/www/css/jquery.mobile.min.css" />
       <link rel="stylesheet" href="https://rawgit.com/vchahalibm/NewsEdge/master/www/css/waves.min.css" />
       <link rel="stylesheet" href="https://rawgit.com/vchahalibm/NewsEdge/master/www/css/animate.css" />
       <link rel="stylesheet" href="https://rawgit.com/vchahalibm/NewsEdge/master/www/css/nativedroid2.css" />
-      
+      <link rel="stylesheet" href="dist/jquery.convform.css">
+      <link type="text/css" rel="stylesheet" href="https://knowledge-engine.easygov.con.in/annotator/css/jquery.pagewalkthrough.min.css" />
+      <link rel="stylesheet" type="text/css" href="https://yaireo.github.io/tagify/dist/tagify.css" /> 
       <style>
         .vizshadow {
           -webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
           filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
           /* Similar syntax to box-shadow */
         }      
-       
+         /*===  SnackBar ===*/      
+        #snackbar {
+          visibility: hidden;
+          min-width: 250px;
+          margin-left: -125px;
+          background-color: #333;
+          color: #fff;
+          text-align: center;
+          border-radius: 2px;
+          padding: 16px;
+          position: fixed;
+          z-index: 1;
+          left: 50%;
+          bottom: 30px;
+          font-size: 17px;
+        }
+        
+        #snackbar.show {
+          visibility: visible;
+          -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+          animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        } 
+         /*===  //SnackBar ===*/      
+        
+         /*===  ChatBot ===*/
+         div.conv-form-wrapper div#messages {
+            transition: bottom 0.15s, padding-bottom 0.15s;
+            position: absolute;
+            bottom: 0;
+            height: auto !important;
+            width: 100%;
+            padding-bottom: 20px;
+            /* max-height: 71vh; */
+            padding-right: 4px;
+            -webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+            filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+         } 
+         div.conv-form-wrapper div.options {
+            word-wrap: normal;
+            white-space: nowrap;
+            overflow-x: scroll;
+            position: absolute;
+            bottom: 100%;
+            width: 100%;
+            transform: translateY(-5px);
+            -webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+            filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+         }         
+
+         div.conv-form-wrapper div.wrapper-messages {
+         position: relative;
+         height: 600px;
+         max-height: 71vh;
+         overflow-y: scroll;
+         transition: margin 0.1s;
+         }
+         form.convFormDynamic {
+         width: calc(100% - 33px);
+         margin: 10px auto 15px;
+         padding: 0 !important;
+         position: relative;
+         /*box-shadow: 0 0 black;*/
+         }
+         form.convFormDynamic textarea.userInputDynamic {
+         border: none;
+         padding: 7px 10px;
+         outline: none;
+         font-size: 0.905rem;
+         float: left;
+         width: calc(100% - 90px);
+         line-height: 1.3em;
+         min-height: 1.7em;
+         max-height: 10rem;
+         display: block;
+         max-width: 88%;
+         margin-right: 2.5%;
+         }
+         textarea::-webkit-input-placeholder{
+            color:red;
+         }
+         textarea:-moz-placeholder {
+            color:red;
+         } 
+         div.conv-form-wrapper:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            display: block;
+            height: 0px;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            background: linear-gradient(#fff, transparent);
+         }         
+         /*==  //ChatBot ==*/
+        /*==  Material Look ==*/        
+        .materialType {
+            background: transparent;
+            border: 0;
+            border-bottom: 1px solid #fff;
+            color: #fff;
+            display: block;
+            font-size: 1.2rem;
+            outline: 0;
+            padding: 0 12px 0px 12px;
+            width: 100%;
+            height: 25px;
+            border-radius: 0px 0px 0 0;
+            font-size:small;
+        }
+        .materialType::after {
+            border-bottom: 2px solid $primary-color;
+            bottom: 0;
+            content: "";
+            display: block;
+            left: 0;
+            margin: 0 auto;
+            position: absolute;
+            right: 0;
+            transform: scaleX(0);
+            transition: all $animation-duration;
+            width: 1%;
+        }
+        /*==  //Material Look ==*/
+        /*==  Tagify  ==*/        
+        .tagify{
+            --tags-border-color: #FFF;
+            min-width:calc(100% - 45px);
+            max-width:600px;
+            /*margin: 0 0 1em 0;*/
+        }
+        /*==  //Tagify  ==*/         
       </style>
    </head>
    <body>
@@ -24,17 +179,17 @@
             <!-- left panel -->
             <div data-role="panel" id="leftpanel" data-display="overlay" data-position-fixed="true" >
                <div class='nd2-sidepanel-profile wow fadeInDown'>
-                  <img class='profile-background' src="./annotator/img/avatarBig.png" style="width: 35%;left: 65%;"/>
+                  <img class='profile-background' src="https://knowledge-engine.easygov.co.in/annotator/img/avatarBig.png" style="width: 35%;left: 65%;"/>
                   <div class="row">
                      <div class='col-xs-4 center-xs'>
                         <div class='box'>
-                           <img class="profile-thumbnail" src="./img/demo_female.png" ng-click="scatterdataFile = 600"/>
+                           <img class="profile-thumbnail" src="https://rawgit.com/vchahalibm/NewsEdge/master/www/img/demo_female.png" ng-click="scatterdataFile = 600"/>
                         </div>
                      </div>
                      <div class='col-xs-8'>
                         <div class='box profile-text'>
                            <strong id='loggedProfile'></strong>
-                           <span class='subline'>CognitiveGarage</span>
+                           <span class='subline'>AI4Rx</span>
                         </div>
                      </div>
                   </div>
@@ -55,69 +210,123 @@
             <div data-role="header" data-position="fixed" class="wow fadeInDown" data-wow-delay="0.2s" style="background-color:white;color:black;height: 6%;box-shadow: none !important;">
                <a href="#bottomsheet" class="ui-btn ui-btn-right wow fadeIn" data-wow-delay='1.2s'><i class="zmdi zmdi-more-vert vizshadow" style="color:black;"></i></a>
                <a href="#leftpanel" class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.8s'><i class="zmdi zmdi-menu vizshadow" style="color:black;"></i></a>
-               <h1 class="wow fadeIn vizshadow" data-wow-delay='0.4s' style="font-weight:300;font-size:20px;padding: 0.1em 0px;text-align:center;" lang="translate" caption="title">AI4RX: Your AI Partner for Digital Transformation</h1>
-               <ul data-role="nd2tabs" data-swipe="false">
-                  <li id='assessmentTab' data-tab="profile" data-tab-active="true" lang="translate" caption="tab1" style="color: black;">Health</li>
-                  <li id='summaryTab' data-tab="analysis" lang="translate" caption="tab2" style="color: black;">Govt</li>
-               </ul>
+               <h1 class="wow fadeIn vizshadow" data-wow-delay='0.4s' style="font-weight:300;font-size:20px;padding: 0.1em 0px;text-align:center;" lang="translate" caption="title">AI4Rx: The Health Genie</h1>
             </div>
             <!-- header panel -->
-            <div id='mainDivID' role="main" class="ui-content" data-inset="false" style="">
+            <div id='mainDivID' role="main" class="ui-content" data-inset="false" style="background-image: url('./annotator/img/avatarBig.png');background-repeat: no-repeat;background-attachment: local;background-position: center top;background-size: 250px 250px;">
                <div data-role="nd2tab" data-tab="profile" ng-show="assessmentView">
-                   <div class="row">
-                      <div id="healthAvatar" class="nd2-card" style="" >
-                         <div class="card-media">
-                            <img src="./annotator/img/avatarBig.png">
-                            <div class="card-media-overlay with-background">
-                               <div class="card-title has-supporting-text">
-                                  <h3 class="card-primary-title" lang="translate" caption="subtitle1">AI Adaptive Health</h3>
-                                  <h5 class="card-subtitle" lang="translate" caption="subtitle2">AI Driven Interactive Health Assessment </h5>
-                               </div>
-                               <div class="card-action">
-                                  <div class="row between-xs">
-                                     <div class="col-xs-12">
-                                        <div class="box">
-                                           <i id="refreshDecisionIcon" class="fa fa-comments-o" style="display:none;"></i>
-                                           <a href="https://knowledge-engine.easygov.co.in/health" id="refreshAssesmentIcon" class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button" lang="translate" caption="start">Start Assessment</a>
-                                        </div>
-                                     </div>
-                                  </div>
-                               </div>
-                            </div>
-                         </div>
-                      </div>
-                      <div id="botAvatar" class="nd2-card" style="" >
-                         <div class="card-media">
-                            <img src="./annotator/img/cg.png">
-                            <div class="card-media-overlay with-background">
-                               <div class="card-title has-supporting-text">
-                                  <h3 class="card-primary-title" lang="translate" caption="subtitle1">Knowledge Design for Healthcare</h3>
-                                  <h5 class="card-subtitle" lang="translate" caption="subtitle2">Knowledge Graph Driven Healtcare Analysis </h5>
-                               </div>
-                               <div class="card-action">
-                                  <div class="row between-xs">
-                                     <div class="col-xs-12">
-                                        <div class="box">
-                                           <i id="refreshKnowledgeIcon" class="fa fa-comments-o" style="display:none;"></i>
-                                           <a href="#" id="refreshAssesmentIcon" class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button" lang="translate" caption="start">Design Assessment</a>
-                                        </div>
-                                     </div>
-                                  </div>
-                               </div>
-                            </div>
-                         </div>
-                      </div>
-                   </div>
+                  <div id="chatAvatar" class="nd2-card" style="margin-top: calc(0% + 230px);display: ;max-width: calc(100% - 30px);box-shadow: none;" >
+                     <div class="card-media">
+                        <img src="https://knowledge-engine.easygov.co.in/annotator/img/cg.png">
+                        <div class="card-media-overlay with-background">
+                           <div class="card-title has-supporting-text">
+                              <h3 class="card-primary-title" lang="translate" caption="subtitle1">AI Adaptive Health</h3>
+                              <h5 class="card-subtitle" lang="translate" caption="subtitle2">AI Driven Interactive Health Assessment </h5>
+                           </div>
+                           <div class="card-action">
+                              <div class="row between-xs">
+                                 <div class="col-xs-12">
+                                    <div class="box">
+                                       <i id="refreshDecisionIcon" class="fa fa-comments-o" style="display:none;"></i>
+                                       <a href="#" id="refreshAssesmentIcon" class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button" lang="translate" caption="start">Start Assessment</a>
+                                       <a href="#" id="showSummaryIcon" class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button" ng-show="summaryView">Show Summary</a>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="welcomechat" class="conv-form-wrapper" style="display:none">
+                     <form action="" method="GET" class="hidden">
+                        <select data-conv-question="☊ Hello! I am AI4Rx BOT, your AI assistant for health assessment. Let's get you started" name="first-question" lang="translate" caption="chatStart">
+                           <option value="Sure" lang="translate" caption="chatOpt2">Sure!</option>
+                        </select>
+                     </form>
+                  </div>
+                  <div id="chat" style="margin-top: 5%;display:none" class="col-12">
+                     <form action="" method="GET" class="hidden">
+                        <select data-conv-question="☊ Hello! I am AI4Rx BOT, your AI assistant for health assessment. Choose the best answer for the following questions" name="first-question" lang="translate" caption="chatStart">
+                           <option value="end" lang="translate" caption="chatOpt1">Not now</option>
+                           <option value="Sure" lang="translate" caption="chatOpt2">Sure!</option>
+                        </select>
+                     </form>
+                  </div>
+                  <a id="restartChat" href="#" class="ui-btn ui-mini ui-btn-inline ui-btn-icon-block waves-effect waves-button waves-effect waves-button" style="position: absolute;top: 1%;right: 1%;display:none;" lang="translate" caption="reassess"><i class="zmdi zmdi-replay zmd-2x"></i>Reassess </a>
                </div>
                <!-- /profile -->
                <div data-role="nd2tab" data-tab="analysis" ng-show="summaryView">
                   <div id='assesmentReport' class="nd2-card" style="box-shadow: none;max-width: calc(100% - 30px);">
                      <div class="card-media">
+                        <img style="height: 600px;width: auto;max-width: 100%;max-height: 800px;marg" src="">
+                        <div class="card-media-overlay with-background" style="top: 1%;background-color: transparent;background: transparent;overflow: scroll;">
+                           <div class="card-title has-supporting-text">
+                              <h3 class="card-primary-title" style="color: darkblue;" lang="translate" caption="summaryTitle">Health Assessment</h3>
+                              <hr style="border-color: darkblue;border-width:3px;">
+                              </hr>
+                              <h5 class="card-subtitle" style="color: darkblue;" lang="translate" caption="summarySubtitle">AI Driven Interactive Health Assessment </h5>
+                           </div>
+                           <div class="card-title has-supporting-text" style="padding: 4px 16px 3px 16px;">
+                              <h5 id="doctorType" class="card-subtitle" style="color: darkblue;" lang="translate" caption="doctor">Doctor </h5>
+                              <h5 id="testType" class="card-subtitle" style="color: darkblue;" lang="translate" caption="test">Tests </h5>
+                              <h5 id="diseaseType" class="card-subtitle" style="color: darkblue;" lang="translate" caption="disease">Likely Ailment </h5>
+                           </div>
+                           <div id="patientInputSeq" data-role="collapsible" data-inset="false" style="margin-left: 1%;margin-top: 5%;">
+                              <h4 lang="translate" style="font-size: small;">Patient Q&A Selections</h4>
+                              <fieldset style="padding: 0.5em;" data-role="controlgroup" class="ui-controlgroup ui-controlgroup-vertical ui-corner-all">
+                                 <div role="heading" class="ui-controlgroup-label">
+                                    <legend>Disease History</legend>
+                                 </div>
+                                 <div id='DECIDER_HIST' class="ui-controlgroup-controls" style="flex-direction: row;display: flex;flex-wrap: wrap;">
+                                 </div>
+                                 <div role="heading" class="ui-controlgroup-label">
+                                    <legend>Other History</legend>
+                                 </div>
+                                 <div id='DECIDER_MAIN' class="ui-controlgroup-controls" style="flex-direction: row;display: flex;flex-wrap: wrap;">
+                                 </div>
+                                 <div role="heading" class="ui-controlgroup-label">
+                                    <legend>Pain History</legend>
+                                 </div>
+                                 <div id='DECIDER_PAIN' class="ui-controlgroup-controls" style="flex-direction: row;display: flex;flex-wrap: wrap;">
+                                 </div>
+                                 <div role="heading" class="ui-controlgroup-label">
+                                    <legend>Additional History</legend>
+                                 </div>
+                                 <div id='DECIDER_ADDL' class="ui-controlgroup-controls" style="flex-direction: row;display: flex;flex-wrap: wrap;">
+                                 </div>
+                                 <div role="heading" class="ui-controlgroup-label" style="margin-bottom: 15px;margin-top: 10px;">
+                                    <legend>Other Symptoms</legend>
+                                 </div>
+                                 <div id='SYMPTOMS' class="ui-controlgroup-controls" style="">
+                                 </div>
+                              </fieldset>
+                              <div style="position: absolute;top: 20%;">
+                                 <div class="col-10">
+                                    <div class="row  border border-primary row" id='DECIDER_HIST_'>
+                                    </div>
+                                 </div>
+                                 <div class="col-10">
+                                    <div class="row  border border-primary row" id='DECIDER_MAIN_'>
+                                    </div>
+                                 </div>
+                                 <div class="col-10">
+                                    <div class="row  border border-primary row" id='DECIDER_PAIN_'>
+                                    </div>
+                                 </div>
+                                 <div class="col-10">
+                                    <div class="row  border border-primary row" id='DECIDER_ADDL_'>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
                      </div>
                   </div>
                   <button id="restartAssesment" class="ui-btn-raised clr-warning ui-btn ui-btn-inline ui-mini waves-effect waves-button waves-effect waves-button" style="position: absolute;bottom: 1%;right: 1%;" lang="translate" caption="reassess1"><i class="zmdi zmdi-comments zmd-1x"></i>  Reassess</button>
                </div>
                <!-- /analysis -->
+               <div id="snackbar">Some Notification text message..</div>
+               <button class=" add-button ui-btn-raised clr-warning waves-effect waves-button waves-effect waves-button ui-btn ui-btn-inline ui-mini waves-effect waves-button" style="position: absolute;bottom: 1%;right: 1%;background-color:black;" lang="translate" caption="homescreen"><i class="zmdi zmdi-apps zmd-1x"></i> ADD TO HOME SCREEN</button>               
             </div>
          </div>
       </div>
@@ -126,10 +335,27 @@
       <script src="https://rawgit.com/vchahalibm/NewsEdge/master/www/js/jquery.mobile.min.js"></script>
       <script src="https://rawgit.com/vchahalibm/NewsEdge/master/www/js/angular.min.js"></script>
       <script src="https://rawgit.com/vchahalibm/NewsEdge/master/www/js/nativedroid2.js"></script>
-
+      <script type="text/javascript" src="https://yaireo.github.io/tagify/dist/jQuery.tagify.min.js"></script>
+      <script src="https://demos.codexworld.com/3rd-party/jsPDF/dist/jspdf.min.js"></script>
+      <script type="text/javascript" src="https://knowledge-engine.easygov.co.in/dist/jquery.convform.js"></script>
+      <script type="text/javascript" src="https://eduardotkoller.github.io/convForm/dist/autosize.min.js"></script>
+      <script type="text/javascript" src="https://knowledge-engine.easygov.co.in/annotator/js/kengine.ai4rx.min.js"></script>
+      <script type="text/javascript" src="https://knowledge-engine.easygov.co.in/annotator/js/inference.min.js"></script>
+      
       <script>
          var appScope = null;
-     
+         function ChatCallBack(stateWrapper, ready) {
+         if(stateWrapper.current.input.name == 'patientconfig'){
+           if(stateWrapper.current.answer.value == 'yes'){
+              $("#reDoWalkthrough").click();
+           }else{
+               $scope.ResetApp();
+           }
+         }
+         //$scope.WalkthroughHelp();
+         //window.open("https://google.com");
+         ready();
+         }         
          var app = angular.module('AnalyticsSolutionsApp', []); 
          app.config(function($interpolateProvider) {
            $interpolateProvider.startSymbol('[[');
@@ -188,8 +414,828 @@
          
            }); 
            
-
-
+           // Code to handle PWA install prompt 
+           let deferredPrompt;
+           const addBtn = document.querySelector('.add-button');
+           addBtn.style.display = 'none';
+            
+            window.addEventListener('beforeinstallprompt', (e) => {
+              // Prevent Chrome 67 and earlier from automatically showing the prompt
+              e.preventDefault();
+              // Stash the event so it can be triggered later.
+              deferredPrompt = e;
+              // Update UI to notify the user they can add to home screen
+              addBtn.style.display = 'block';
+            
+              addBtn.addEventListener('click', (e) => {
+                // hide our user interface that shows our A2HS button
+                addBtn.style.display = 'none';
+                // Show the prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond to the prompt
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                      console.log('User accepted the A2HS prompt');
+                    } else {
+                      console.log('User dismissed the A2HS prompt');
+                    }
+                    deferredPrompt = null;
+                  });
+              });
+            });           
+            window.addEventListener('appinstalled', (evt) => {
+              // Log install to analytics
+              console.log('INSTALL: Success');
+            });
+            window.addEventListener('DOMContentLoaded', () => {
+              let displayMode = 'browser tab';
+              if (navigator.standalone) {
+                displayMode = 'standalone-ios';
+              }
+              if (window.matchMedia('(display-mode: standalone)').matches) {
+                displayMode = 'standalone';
+              }
+              // Log launch display mode to analytics
+              console.log('DISPLAY_MODE_LAUNCH:', displayMode);
+              
+              window.matchMedia('(display-mode: standalone)').addListener((evt) => {
+                let displayMode = 'browser tab';
+                if (evt.matches) {
+                  displayMode = 'standalone';
+                }
+                // Log display mode change to analytics
+                console.log('DISPLAY_MODE_CHANGED', displayMode);
+              });              
+            });            
+            
+            
+           $scope.UpdateDemoUI = function(nba,mode='NBA',diseaseObj=null){
+               console.log(nba);
+                // show walkthrough Next button
+                if($('#jpwNext').length){
+                    $('#jpwNext').show();
+                }
+               
+               if(nba && nba.Qn && nba.Ans){
+                   if(diseaseObj != null){
+                    $scope.runTimeSequence.push({"Qn":nba.Qn,"Ans":nba.Ans,"step":nba.step,"disease":diseaseObj.disease,"doctor":diseaseObj.doctor,"test":diseaseObj.test});
+                   }else{
+                    $scope.runTimeSequence.push({"Qn":nba.Qn,"Ans":nba.Ans,"step":nba.step});
+                   }
+                   $scope.$apply();
+               }
+               if(mode == 'NBA'){
+                   if(nba.step == 'DECIDER_HIST'){
+                       var htmlTR = '';
+                       nba.values.forEach(function(value) {
+                           htmlTR = htmlTR +'<div class="ui-checkbox"><label id="label_checkbox_'+value.value.replace(/[^\w]/gi, '')+'" for="checkbox-'+value.value.replace(/[^\w]/gi, '')+'" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off ui-first-child">'+value.value+'</label><input type="checkbox" name="checkbox-'+value.value.replace(/[^\w]/gi, '')+'" id="checkbox-'+value.value.replace(/[^\w]/gi, '')+'" ></div>';
+                       });
+                       document.getElementById('DECIDER_HIST').innerHTML = htmlTR;
+                   }else if (nba.step == 'DECIDER_MAIN'){
+                       $scope.FirstStyleStep = 0;
+                       var htmlTR = '';
+                       nba.values.forEach(function(value) {
+                           htmlTR = htmlTR +'<div class="ui-checkbox"><label id="label_checkbox_'+value.value.replace(/[^\w]/gi, '')+'" for="checkbox-'+value.value.replace(/[^\w]/gi, '')+'" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off ui-first-child">'+value.value+'</label><input type="checkbox" name="checkbox-'+value.value.replace(/[^\w]/gi, '')+'" id="checkbox-'+value.value.replace(/[^\w]/gi, '')+'" ></div>';
+                       });
+                       document.getElementById('DECIDER_MAIN').innerHTML = htmlTR;                    
+                   }else if (nba.step == 'DECIDER_PAIN'){
+                       var htmlTR = '';
+                       nba.values.forEach(function(value) {
+                           htmlTR = htmlTR +'<div class="ui-checkbox"><label id="label_checkbox_'+value.value.replace(/[^\w]/gi, '')+'" for="checkbox-'+value.value.replace(/[^\w]/gi, '')+'" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off ui-first-child">'+value.value+'</label><input type="checkbox" name="checkbox-'+value.value.replace(/[^\w]/gi, '')+'" id="checkbox-'+value.value.replace(/[^\w]/gi, '')+'" ></div>';
+                       });
+                       document.getElementById('DECIDER_PAIN').innerHTML = htmlTR;                     
+                   }else if (nba.step == 'DECIDER_ADDL'){
+                       var htmlTR = '';
+                       nba.values.forEach(function(value) {
+                           htmlTR = htmlTR +'<div class="ui-checkbox"><label id="label_checkbox_'+value.value.replace(/[^\w]/gi, '')+'" for="checkbox-'+value.value.replace(/[^\w]/gi, '')+'" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off ui-first-child">'+value.value+'</label><input type="checkbox" name="checkbox-'+value.value.replace(/[^\w]/gi, '')+'" id="checkbox-'+value.value.replace(/[^\w]/gi, '')+'" ></div>';
+                       });
+                       document.getElementById('DECIDER_ADDL').innerHTML = htmlTR;                    
+                   }else{
+                       var htmlTR = document.getElementById('SYMPTOMS').innerHTML;
+                       htmlTR = htmlTR+'<div role="heading" class="ui-controlgroup-label"><legend>'+nba.text+'</legend></div><div class="ui-controlgroup-controls" style="flex-direction: row;display: flex;flex-wrap: wrap;">';
+                       nba.values.forEach(function(value) {
+                           htmlTR = htmlTR +'<div class="ui-checkbox" style="display:;"><label id="label_checkbox_'+nba.label.replace(/[^\w]/gi, '')+'_'+value.value.replace(/[^\w]/gi, '')+'" for="checkbox-'+nba.label.replace(/[^\w]/gi, '')+'_'+value.value.replace(/[^\w]/gi, '')+'" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off ui-first-child">'+value.value+'</label><input type="checkbox" name="checkbox-'+nba.label.replace(/[^\w]/gi, '')+'_'+value.value.replace(/[^\w]/gi, '')+'" id="checkbox-'+nba.label.replace(/[^\w]/gi, '')+'_'+value.value.replace(/[^\w]/gi, '')+'" ></div>';
+                       });
+                       htmlTR = htmlTR + '</div>';
+                       document.getElementById('SYMPTOMS').innerHTML = htmlTR;                    
+                   }                    
+               }else if(mode == 'THRESHOLD'){
+                   $scope.ThresholdReached = 1;
+                   $("#diseaseType").html('Likely Ailment: '+diseaseObj.disease);
+                   //$("#diseaseProbability").val(diseaseProbablity);
+                   $("#doctorType").html('Doctor: '+diseaseObj.doctor);
+                   $("#testType").html('Tests: '+diseaseObj.test);
+                   SaveLog('NOSHOW');
+               }else if(mode == 'END'){
+                   if(!$scope.ThresholdReached){
+                       ShowMessage('INFO','Insufficient or Random Answers, press Reassess.');
+                   }
+                   //$("#restartChat").hide();
+                   //$('#chat').hide();
+                   //$('#chatAvatar').show();
+                   //$scope.assessmentView = false;
+                   //$scope.summaryView = true;
+                   //$scope.$apply();
+                   //$('#summaryTab').trigger('click');
+               }else if (mode == 'START'){
+                    $('#chat').show();
+                    $('#chatAvatar').hide();
+                    $scope.FirstStylestep = 1;
+                    $scope.lastStyleMargin = 1000;
+                    // reset summary report
+                    $("#diseaseType").html('Likely Ailment:');
+                    $("#doctorType").html('Doctor:');
+                    $("#testType").html('Tests:');
+                    document.getElementById('DECIDER_HIST').innerHTML = '';
+                    document.getElementById('DECIDER_MAIN').innerHTML = '';
+                    document.getElementById('DECIDER_PAIN').innerHTML = '';
+                    document.getElementById('DECIDER_ADDL').innerHTML = '';
+                    document.getElementById('SYMPTOMS').innerHTML = '';
+                    //ChatOptionsAdjustment();
+               }else if (mode == 'LOG'){
+                   console.log(diseaseObj);
+               }
+               // check the selected options
+               if(nba  && nba.Ans.length >= 1){
+                   if(Array.isArray(nba.Ans)){
+                       nba.Ans.forEach(function(ans) {
+                           if(ans != "Skip Question"){
+                               if(document.getElementById('label_checkbox_'+ans.replace(/[^\w]/gi, ''))){
+                                   $('#label_checkbox_'+ans.replace(/[^\w]/gi, '')).removeClass("ui-checkbox-on");
+                                   $('#label_checkbox_'+ans.replace(/[^\w]/gi, '')).addClass("ui-checkbox-on");
+                               }
+                           }
+                       });                       
+                   }else{
+                        if(nba.Ans == "x"){
+                            ChatOptionsAdjustment();
+                        }else if(nba.Ans != "Skip Question"){
+                            if(document.getElementById('label_checkbox_'+nba.Qn.replace(/[^\w]/gi, '')+'_'+nba.Ans.replace(/[^\w]/gi, ''))){
+                                $('#label_checkbox_'+nba.Qn.replace(/[^\w]/gi, '')+'_'+nba.Ans.replace(/[^\w]/gi, '')).removeClass("ui-checkbox-on");
+                                $('#label_checkbox_'+nba.Qn.replace(/[^\w]/gi, '')+'_'+nba.Ans.replace(/[^\w]/gi, '')).addClass("ui-checkbox-on");
+                                $('#label_checkbox_'+nba.Qn.replace(/[^\w]/gi, '')+'_'+nba.Ans.replace(/[^\w]/gi, '')).parent().show();
+                            }
+                        }
+                       
+                   }
+               }
+               
+           };
+           
+           $scope.Translate = function(res){
+               //let txt = await GetTranslation(res.QuestionText);
+                //serverURL = window.location.origin;
+                //url = serverURL + "/ai4rxtranslate?sentence="+res.QuestionText;
+                //console.log("Translating:"+res.QuestionText);
+                //var httpRequest = new XMLHttpRequest();
+                //httpRequest.open('GET', url,false);
+                //httpRequest.send();
+                //res.QuestionText = httpRequest.responseText;
+                return res;               
+               
+           };
+           
+           function ajax(url) {
+              return new Promise(function(resolve, reject) {
+                var xhr = new XMLHttpRequest();
+                xhr.onload = function() {
+                  resolve(this.responseText);
+                };
+                xhr.onerror = reject;
+                xhr.open('GET', url);
+                xhr.send();
+              });
+           }
+         
+           $("#refreshAssesmentIcon").click(function() {
+               RefreshAssesment();
+           });
+         
+           $("#restartAssesment").click(function() {
+               RefreshAssesment();
+           });
+         
+           $("#reDoAssesment").click(function() {
+               $scope.assessmentView = true;
+               $scope.summaryView = false;
+               $scope.$apply();
+               $('#assessmentTab').click();
+           });
+         
+           $("#reDoSummary").click(function() {
+                //$('#summaryTab').trigger('click');
+               $scope.assessmentView = false;
+               $scope.summaryView = true;
+               $scope.$apply();
+               $('#summaryTab').click();
+           }); 
+           
+           $("#reDoWalkthrough").click(function() {
+                $('#leftpanel').panel("close");
+                $scope.ResetApp();
+                $scope.WalkthroughHelp();
+           });
+           
+           $("#restartChat").click(function() {
+               $scope.ThresholdReached = 0;
+               $scope.runTimeSequence = [];
+               $("#diseaseType").html('Likely Ailment:');
+               $("#doctorType").html('Doctor:');
+               $("#testType").html('Tests:');
+               document.getElementById('DECIDER_HIST').innerHTML = '';
+               document.getElementById('DECIDER_MAIN').innerHTML = '';
+               document.getElementById('DECIDER_PAIN').innerHTML = '';
+               document.getElementById('DECIDER_ADDL').innerHTML = '';
+               $scope.FirstStyleStep = 1;
+               $scope.lastStyleMargin = 1000;
+               $("#refreshDecisionIcon").click();
+           });
+           
+           $("#saveLogs").click(function() {
+               SaveLog('SAVE');
+           });
+           
+            $("#saveReport").click(function() {
+               SaveReport('SAVE');
+           });
+          
+           function SaveLog(displayFlag){
+                serverURL = window.location.origin;
+                url = serverURL + "/ai4rxlog";
+                console.log("Calling " + url + " to save logs");
+                SendPayload(url, $scope.runTimeSequence,displayFlag);
+           } 
+           
+           function SaveReport(displayFlag){
+                var doc = new jsPDF();
+                var elementHTML = $('#assesmentReport').html();
+                var specialElementHandlers = {
+                    '#elementH': function (element, renderer) {
+                        return true;
+                    }
+                };
+                doc.fromHTML(elementHTML, 15, 15, {
+                    'width': 170,
+                    'elementHandlers': specialElementHandlers
+                });
+                
+                // Save the PDF
+                doc.save('report.pdf');
+           }           
+           
+           $scope.ResetApp = function(){
+                $("#restartChat").hide();
+                $('#welcomechat').hide();
+                $('#chat').hide();
+                $('#chatAvatar').show();
+                $scope.assessmentView = true;
+                $scope.summaryView = false;
+                $scope.$apply();
+                $('#assessmentTab').trigger('click');
+           }
+           
+           function RefreshAssesment(){
+               $scope.ThresholdReached = 0;
+               $scope.runTimeSequence = [];
+               $scope.assessmentView = true;
+               $scope.summaryView = false;
+               $scope.$apply();
+               //$('#assessmentTab').trigger('click');
+               $("#diseaseType").html('Likely Ailment:');
+               $("#doctorType").html('Doctor:');
+               $("#testType").html('Tests:');
+               document.getElementById('DECIDER_HIST').innerHTML = '';
+               document.getElementById('DECIDER_MAIN').innerHTML = '';
+               document.getElementById('DECIDER_PAIN').innerHTML = '';
+               document.getElementById('DECIDER_ADDL').innerHTML = '';
+               $("#restartChat").show();
+               $scope.FirstStyleStep = 1;
+               $scope.lastStyleMargin = 1000;
+               $("#refreshDecisionIcon").click();
+           }
+           
+           function SendPayload(url, payload,Msgflag) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        if(Msgflag == 'SHOW'){
+                            ShowMessage('INFO','Saved the Log to server');
+                        }
+                        console.log("Saved Data");
+                    }
+                };
+                xhttp.open("POST", url, true);
+                xhttp.setRequestHeader("Content-type", "text/plain;charset=UTF-8");
+            
+                var textStr = JSON.stringify(payload);
+                xhttp.send(textStr);
+           }           
+           
+           function ShowMessage(title,msg){
+            new $.nd2Toast({ // The 'new' keyword is important, otherwise you would overwrite the current toast instance
+               message : msg, // Required
+               action : { // Optional (Defines the action button on the right)
+                 title : title, // Title of the action button
+                 link : "/ai4rxlogs", // optional (either link or fn or both must be set to define an action)
+                 /*fn : function() { // function that will be triggered when action clicked
+                    console.log("Action Button clicked'");
+                 },*/
+                 color : "red" // optional color of the button (default: 'lime')
+               },
+               ttl : 8000 // optional, time-to-live in ms (default: 3000)
+             });               
+           }
+           
+           function GetTranslation(sentence){
+                serverURL = window.location.origin;
+                url = serverURL + "/ai4rxtranslate?sentence="+sentence;
+                console.log("Translating:"+sentence);
+                //$.get(url, "", function(result) {
+                //    var results = result;
+                //}); 
+                
+                ajax(url).then(function(result) {
+                    //res.QuestionText = result;
+                    return result;
+                }).catch(function() {
+                });                 
+           }
+           
+           function ChatOptionsAdjustment() {
+        		// adjust the height of options relative to question box height
+        		var observer = new MutationObserver(function (mutations) {
+        			mutations.forEach(function (mutationRecord) {
+        				var divM = $(".wrapper-messages")
+        				var divMdiff = divM.css("marginBottom");
+        				//console.log(' Wrapper-messages style changed! '+divMdiff);
+        
+        				var diff = $(".dragscroll").height();
+        				// temp fix for wrapping chat options on first step
+        				if ($scope.lastStyleMargin < diff && $scope.FirstStyleStep) {
+        					diff = ($scope.lastStyleMargin != null)?$scope.lastStyleMargin:1000;
+        				} else if ($scope.FirstStyleStep) {
+        					$scope.lastStyleMargin = (diff != null)?diff:1000;
+        				}
+        
+        				diff = (diff != null)?diff:0 ;
+        				diff = '-' + diff + 'px';
+        				$(".dragscroll").css({
+        					"display": "flex",
+        					"flex-wrap": "wrap",
+        					"position": "relative",
+        					"margin-top": diff
+        				});
+        			});
+        		});
+        
+        		//var target = $(".dragscroll");
+        		var observerConfig = {
+        			attributes: true,
+        			childList: false,
+        			characterData: false,
+        			attributeFilter: ['style']
+        		};
+        		var target = document.getElementsByClassName("wrapper-messages")[0];
+        		//var target = document.getElementsByClassName("dragscroll")[0];
+        		//observer.observe(target, { attributes : true,attributeFilter: ['style']});
+        		observer.observe(target, observerConfig);
+           }
+        
+           function userInputAdjustment(elmnt,eln) {
+        		if ($("#userInput").length) {
+        			$("#userInput").attr("onkeydown", "return false");
+        			$('#userInput').attr('readonly','readonly');
+        			console.log('ADJUSTING INPUT');
+        		}
+        		
+        		var observer = new MutationObserver(function (mutations) {
+        			mutations.forEach(function (mutationRecord) {
+        				if ($("#userInput").length) {
+        					//$("#userInput").attr("onkeydown", "return false");
+        					//$('#userInput').attr('readonly','readonly');
+        					$('#userInput').attr('placeholder','Select Options above ☝');
+        					$("#userInput").css("color", "darkred");
+        					$("#userInput").css("font-size", "18px");
+        					
+        					console.log('ADJUSTING INPUT');
+        				}
+        
+        			});
+        		});
+        
+        		var observerConfig = {
+        			attributes: true,
+        			childList: true,
+        			characterData: true
+        		};
+        		var el = document.getElementsByClassName(elmnt);
+        		//var target = document.getElementsByClassName(elmnt)[eln];
+        		var target = document.getElementById(elmnt);
+        		observer.observe(target, observerConfig);
+        
+           }
+           var getParams = function (url) {
+            	var params = {};
+            	var parser = document.createElement('a');
+            	parser.href = url;
+            	var query = parser.search.substring(1);
+            	var vars = query.split('&');
+            	for (var i = 0; i < vars.length; i++) {
+            		var pair = vars[i].split('=');
+            		params[pair[0]] = decodeURIComponent(pair[1]);
+            	}
+            	return params;
+           };
+           
+           $scope.LoadAnimation = function(){
+             // Set our main variables
+             let scene,
+             renderer,
+             camera,
+             model, // Our character
+             neck, // Reference to the neck bone in the skeleton
+             waist, // Reference to the waist bone in the skeleton
+             LeftForeArm, // Reference to the left fore arm bone in the skeleton
+             possibleAnims, // Animations found in our file
+             mixer, // THREE.js animations mixer
+             idle, // Idle, the default state our character returns to
+             fileAnimations, // All animations
+             clock = new THREE.Clock(), // Used for anims, which run to a clock instead of frame rate 
+             currentlyAnimating = false, // Used to check whether characters neck is being used in another anim
+             raycaster = new THREE.Raycaster(), // Used to detect the click on our character
+             loaderAnim = document.getElementById('js-loader');
+             var mousecoords;
+           
+             init3d();
+           
+             function init3d() {
+           
+               //const MODEL_PATH = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy_lightweight.glb';
+               const MODEL_PATH = './data/3d/js/Doctor.glb';
+               const canvas = document.querySelector('#cd');
+               //const backgroundColor = 0xf1f1f1;
+               const backgroundColor = 0xffffff;
+           
+               // Init the scene
+               scene = new THREE.Scene();
+               scene.background = new THREE.Color(backgroundColor);
+               scene.fog = new THREE.Fog(backgroundColor, 60, 100);
+           
+               // Init the renderer
+               renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+               renderer.shadowMap.enabled = true;
+               renderer.setPixelRatio(window.devicePixelRatio);
+               document.body.appendChild(renderer.domElement);
+           
+               // Add a camera
+               camera = new THREE.PerspectiveCamera(50,window.innerWidth / window.innerHeight,0.1,1000);
+           
+               camera.position.z = 30;
+               camera.position.x = 0;
+               camera.position.y = -3;
+           /*
+               let stacy_txt = new THREE.TextureLoader().load('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy.jpg');
+               stacy_txt.flipY = false;
+           
+               const stacy_mtl = new THREE.MeshPhongMaterial({
+                 map: stacy_txt,
+                 color: 0xffffff,
+                 skinning: true });
+           */
+           
+           
+               var loader = new THREE.GLTFLoader();
+           
+               loader.load(
+               MODEL_PATH,
+               function (gltf) {
+                 model = gltf.scene;
+                 fileAnimations = gltf.animations;
+           
+                 model.traverse(o => {
+           
+                   if (o.isMesh) {
+                     o.castShadow = true;
+                     o.receiveShadow = true;
+                     //o.material = stacy_mtl;
+                   }
+                   // Reference the neck and waist bones
+                   if (o.isBone && o.name === 'mixamorigNeck') {
+                     neck = o;
+                   }else{/*console.log(o.name);*/}
+                   if (o.isBone && o.name === 'mixamorigSpine') {
+                     waist = o;
+                   }
+                   if (o.isBone && o.name === 'mixamorigLeftLeg') {
+                     leg = o;
+                   }
+                   if (o.isBone && o.name === 'mixamorigLeftForeArm') {
+                     LeftForeArm = o;
+                   }
+                 });
+           
+                 model.scale.set(7, 7, 7);
+                 model.position.y = -11;
+           
+                 scene.add(model);
+           
+                 loaderAnim.remove();
+           
+                 mixer = new THREE.AnimationMixer(model);
+           
+                 let clips = fileAnimations.filter(val => val.name !== 'Idle');
+                 possibleAnims = clips.map(val => {
+                   let clip = THREE.AnimationClip.findByName(clips, val.name);
+           
+                   clip.tracks.splice(3, 3);
+                   clip.tracks.splice(9, 3);
+           
+                   clip = mixer.clipAction(clip);
+                   return clip;
+                 });
+                 
+                 $scope.possibleAnims = possibleAnims;
+           
+           
+                 let idleAnim = THREE.AnimationClip.findByName(fileAnimations, 'Idle');
+                 
+                 let sittingAnim = THREE.AnimationClip.findByName(fileAnimations, 'Sitting');
+                 let talkingAnim = THREE.AnimationClip.findByName(fileAnimations, 'Talking');
+                 let acknowledgeAnim = THREE.AnimationClip.findByName(fileAnimations, 'Acknowledge');
+                 let yesAnim = THREE.AnimationClip.findByName(fileAnimations, 'Yes');
+                 let noAnim = THREE.AnimationClip.findByName(fileAnimations, 'No');
+                 let shiftAnim = THREE.AnimationClip.findByName(fileAnimations, 'Shift');
+                 let nodAnim = THREE.AnimationClip.findByName(fileAnimations, 'Headnod');
+                 let angryAnim = THREE.AnimationClip.findByName(fileAnimations, 'Angry');
+                 
+                 console.log(idleAnim.tracks);
+           
+                 idleAnim.tracks.splice(3, 3);
+                 idleAnim.tracks.splice(9, 3);
+                 //idleAnim.tracks.splice(18, 3);
+           
+                 idle = mixer.clipAction(idleAnim);
+                 idle.play();
+                 $scope.Idle = idle;
+           
+               },
+               undefined, // We don't need this function
+               function (error) {
+                 console.error(error);
+               });
+           
+           
+               // Add lights
+               let hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 2.91);
+               hemiLight.position.set(0, 50, 0);
+               // Add hemisphere light to scene
+               scene.add(hemiLight);
+           
+               let d = 8.25;
+               let dirLight = new THREE.DirectionalLight(0xffffff, 0.54);
+               dirLight.position.set(-8, 12, 8);
+               dirLight.castShadow = true;
+               dirLight.shadow.mapSize = new THREE.Vector2(1024, 1024);
+               dirLight.shadow.camera.near = 0.1;
+               dirLight.shadow.camera.far = 1500;
+               dirLight.shadow.camera.left = d * -1;
+               dirLight.shadow.camera.right = d;
+               dirLight.shadow.camera.top = d;
+               dirLight.shadow.camera.bottom = d * -1;
+               // Add directional Light to scene
+               scene.add(dirLight);
+           
+           
+               // Floor
+               let floorGeometry = new THREE.PlaneGeometry(5000, 5000, 1, 1);
+               let floorMaterial = new THREE.MeshPhongMaterial({
+                 color: 0xeeeeee,
+                 shininess: 0 });
+           
+           
+               let floor = new THREE.Mesh(floorGeometry, floorMaterial);
+               floor.rotation.x = -0.5 * Math.PI;
+               floor.receiveShadow = true;
+               floor.position.y = -11;
+               scene.add(floor);
+           
+               let geometry = new THREE.SphereGeometry(8, 32, 32);
+               let material = new THREE.MeshBasicMaterial({ color: 0x9bffaf }); // 0xf2ce2e 
+               let sphere = new THREE.Mesh(geometry, material);
+           
+               sphere.position.z = -15;
+               sphere.position.y = -2.5;
+               sphere.position.x = -0.25;
+               scene.add(sphere);
+             }
+           
+             function update() {
+               if (mixer) {
+                 mixer.update(clock.getDelta());
+               }
+           
+               if (resizeRendererToDisplaySize(renderer)) {
+                 const canvas = renderer.domElement;
+                 camera.aspect = canvas.clientWidth / canvas.clientHeight;
+                 camera.updateProjectionMatrix();
+               }
+           
+               renderer.render(scene, camera);
+               requestAnimationFrame(update);
+             }
+           
+             update();
+           
+             function resizeRendererToDisplaySize(renderer) {
+               const canvas = renderer.domElement;
+               let width = window.innerWidth;
+               let height = window.innerHeight;
+               let canvasPixelWidth = canvas.width / window.devicePixelRatio;
+               let canvasPixelHeight = canvas.height / window.devicePixelRatio;
+           
+               const needResize =
+               canvasPixelWidth !== width || canvasPixelHeight !== height;
+               if (needResize) {
+                 renderer.setSize(width, height, false);
+               }
+               return needResize;
+             }
+           
+             window.addEventListener('click', e => raycast(e));
+             window.addEventListener('touchend', e => raycast(e, true));
+           
+             function raycast(e, touch = false) {
+               var mouse = {};
+               if (touch) {
+                 mouse.x = 2 * (e.changedTouches[0].clientX / window.innerWidth) - 1;
+                 mouse.y = 1 - 2 * (e.changedTouches[0].clientY / window.innerHeight);
+               } else {
+                 mouse.x = 2 * (e.clientX / window.innerWidth) - 1;
+                 mouse.y = 1 - 2 * (e.clientY / window.innerHeight);
+               }
+               // update the picking ray with the camera and mouse position
+               raycaster.setFromCamera(mouse, camera);
+           
+               // calculate objects intersecting the picking ray
+               var intersects = raycaster.intersectObjects(scene.children, true);
+           
+               if (intersects[0]) {
+                 var object = intersects[0].object;
+           
+                 //if (object.name === 'Doctor') {
+           
+                   //if (!currentlyAnimating) {
+                   //  currentlyAnimating = true;
+                   //  playOnClick();
+                   //}
+                 //}
+                   if (!$scope.currentlyAnimating) {
+                     $scope.currentlyAnimating = true;
+                     playOnClick();
+                   }
+                 
+                 
+               }
+             }
+           
+             // Get a random animation, and play it 
+             function playOnClick() {
+               //let anim = Math.floor(Math.random() * possibleAnims.length) + 0;
+               //playModifierAnimation(idle, 0.25, possibleAnims[anim], 0.25);
+               //let DynamicAnim = THREE.AnimationClip.findByName(fileAnimations, $scope.animation);
+               //let playAnim = mixer.clipAction(DynamicAnim);
+               //$scope.playModifierAnimation(idle, 0.25, possibleAnims[1], 0.25);
+             }
+           
+           
+             function playModifierAnimation_OLD(from, fSpeed, to, tSpeed) {
+               to.setLoop(THREE.LoopOnce);
+               to.reset();
+               to.play();
+               from.crossFadeTo(to, fSpeed, true);
+               setTimeout(function () {
+                 from.enabled = true;
+                 to.crossFadeTo(from, tSpeed, true);
+                 currentlyAnimating = false;
+               }, to._clip.duration * 1000 - (tSpeed + fSpeed) * 1000);
+             }
+           
+             document.addEventListener('mousemove', function (e) {
+               
+               if (neck && waist) {
+                   if(!$scope.talking){
+                       mousecoords = getMousePos(e);
+                       //console.log(mousecoords);
+                   }else{
+                       mousecoords = {"x":981,"y":432};
+                   }
+                   moveJoint(mousecoords, neck, 50);
+                   moveJoint(mousecoords, waist, 30);
+                   //moveJoint(mousecoords, LeftForeArm, 80);
+                   var movVal = [];
+                   movVal[0] = -0.207;
+                   movVal[1] = -0.458;
+                   //moveJoint(mousecoords, LeftForeArm, 80,movVal);                        
+               }
+             });
+           
+             function getMousePos(e) {
+               return { x: e.clientX, y: e.clientY };
+             }
+           
+             function moveJoint(mouse, joint, degreeLimit,fixedval) {
+               if(fixedval){
+                 joint.rotation.x = fixedval[0];
+                 joint.rotation.y = fixedval[1];       
+               }else{
+                 let degrees = getMouseDegrees(mouse.x, mouse.y, degreeLimit);
+                 joint.rotation.y = THREE.Math.degToRad(degrees.x);
+                 joint.rotation.x = THREE.Math.degToRad(degrees.y);  
+               }
+               //console.log(joint.name+':'+joint.rotation.x+'::'+joint.rotation.y);
+             }
+           
+             function getMouseDegrees(x, y, degreeLimit) {
+               let dx = 0,
+               dy = 0,
+               xdiff,
+               xPercentage,
+               ydiff,
+               yPercentage;
+           
+               let w = { x: window.innerWidth, y: window.innerHeight };
+           
+               // Left (Rotates neck left between 0 and -degreeLimit)
+               // 1. If cursor is in the left half of screen
+               if (x <= w.x / 2) {
+                 // 2. Get the difference between middle of screen and cursor position
+                 xdiff = w.x / 2 - x;
+                 // 3. Find the percentage of that difference (percentage toward edge of screen)
+                 xPercentage = xdiff / (w.x / 2) * 100;
+                 // 4. Convert that to a percentage of the maximum rotation we allow for the neck
+                 dx = degreeLimit * xPercentage / 100 * -1;
+               }
+           
+               // Right (Rotates neck right between 0 and degreeLimit)
+               if (x >= w.x / 2) {
+                 xdiff = x - w.x / 2;
+                 xPercentage = xdiff / (w.x / 2) * 100;
+                 dx = degreeLimit * xPercentage / 100;
+               }
+               // Up (Rotates neck up between 0 and -degreeLimit)
+               if (y <= w.y / 2) {
+                 ydiff = w.y / 2 - y;
+                 yPercentage = ydiff / (w.y / 2) * 100;
+                 // Note that I cut degreeLimit in half when she looks up
+                 dy = degreeLimit * 0.5 * yPercentage / 100 * -1;
+               }
+               // Down (Rotates neck down between 0 and degreeLimit)
+               if (y >= w.y / 2) {
+                 ydiff = y - w.y / 2;
+                 yPercentage = ydiff / (w.y / 2) * 100;
+                 dy = degreeLimit * yPercentage / 100;
+               }
+               return { x: dx, y: dy };
+             }
+           }
+           
+           $scope.playModifierAnimation = function(from, fSpeed, to, tSpeed){
+               to.setLoop(THREE.LoopOnce);
+               to.reset();
+               to.play();
+               from.crossFadeTo(to, fSpeed, true);
+               setTimeout(function () {
+                 from.enabled = true;
+                 to.crossFadeTo(from, tSpeed, true);
+                 $scope.currentlyAnimating = false;
+               }, to._clip.duration * 1000 - (tSpeed + fSpeed) * 1000);
+           };
+         
+           $scope.LoginUser = function(){
+             console.log("USER:"+$scope.userID+" PASSWORD:"+$scope.userPassword)
+             if($scope.userID && $scope.userPassword)
+             {
+               console.log("Got IN LOGIN")
+               switch($scope.userID)
+               {
+                   case "demo":
+                       check();
+                       break;
+               }             
+             }          
+           };
+           
+           $scope.LogoutUser = function(){
+             $scope.defaultView = false;
+             $scope.buildbuy = false
+             $scope.successprofile = false;
+             $scope.TalentReaignment = false;
+             $scope.scenario = false;
+             $scope.login = true;
+             $scope.userID = '';
+             $scope.userPassword = '';         
+           };
+         
            $scope.TabFunction = function(tabID){
            	switch(tabID) {
            	  case 1:
@@ -238,9 +1284,630 @@
            	    break;        	    
            	} 
            }
-                  
+         
+           function check(){
+               if($scope.userPassword == 'demo'){
+                   $('#loginModal').modal('hide');
+                   $scope.login = false;
+                   $scope.defaultView = true;
+                   //get_data();
+                   create_inference_graph();
+                   //create_force_graph();
+               }
+           }
+           
+           function AfterWalkthroughStep(){
+               var opt = $('body').pagewalkthrough('getOptions');
+               var idx = $('body').pagewalkthrough('index');
+               if(idx == 1){
+                   console.log('AFTER STEP '+idx);
+                   $('#refreshAssesmentIcon').click();
+               }else if (idx == 2){
+                   console.log('AFTER STEP '+idx);
+               }else if (idx == 3){
+                   console.log('AFTER STEP '+idx);
+                   $('#convForm .options div+div').click();
+               }else if (idx == 4){
+                   console.log('AFTER STEP '+idx);
+                   //$("div:contains('Diabetes')").click();
+                   //$("div:contains('Diabetes')").click();
+                   $("div:contains('Skip Question')").click();
+               }else if (idx == 5){
+                   console.log('AFTER STEP '+idx);
+                   $("div:contains('Skip Question')").click();
+               }else if (idx == 6){
+                   console.log('AFTER STEP '+idx);
+                   $('.submit').click();
+                   $('#reDoSummary').click();
+               }
+           }
+           
+           function BeforeWalkthroughStep(){
+               var opt = $('body').pagewalkthrough('getOptions');
+               var idx = $('body').pagewalkthrough('index');
+               if(idx == 1){
+                   console.log('BEFORE STEP '+idx);
+                   ObserveWalkthroughChanges();
+               }else if (idx == 2){
+                   console.log('BEFORE STEP '+idx);
+               }else if (idx == 3){
+                   console.log('BEFORE STEP '+idx);
+               }else if (idx == 4){
+                   console.log('BEFORE STEP '+idx);
+               }else if (idx == 5){
+                   console.log('BEFORE STEP '+idx);
+               }else if (idx == 6){
+                   console.log('BEFORE STEP '+idx);
+               }               
+           }
+           
+           function ObserveWalkthroughChanges(){
+                var observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutationRecord) {
+                        var opt = $('body').pagewalkthrough('getOptions');
+                        var idx = $('body').pagewalkthrough('index');
+                        if(idx == 2 && $('#jpwPrevious').is(":visible")){
+                        //if(idx == 2 && $("div:contains('Sure!')").length <= 0){
+                            $('#jpwNext').hide();
+                            $('#jpwPrevious').hide();
+                        }else{
+                            $('#jpwPrevious').hide();
+                        }
+                    });
+                });
+               
+                var observerConfig = {
+                    attributes: true,
+                    childList: true,
+                    characterData: false,
+                    attributeFilter: ['style']
+                };                
+                var target = document.getElementById("jpWalkthrough");
+                observer.observe(target, observerConfig);               
+           }
+         
+           function sleep(milliseconds) {
+              const date = Date.now();
+              let currentDate = null;
+              do {
+                currentDate = Date.now();
+              } while (currentDate - date < milliseconds);
+           } 
+           
+           function CheckElementExists(id){
+                var checkExist = setInterval(function() {
+                    if ($(id).length) {
+                        console.log("Element Exists!");
+                        clearInterval(checkExist);
+                    }else{
+                        console.log("Checking Element?");
+                    }
+                }, 100); // check every 100ms
+           }
+           
+           $scope.WalkthroughHelp = function(){
+                // Set up tour
+                $('body').pagewalkthrough({
+                    name: 'introduction',
+                    steps: [{
+                       popup: {
+                           content: '#walkthrough-1',
+                           type: 'modal'
+                       }
+                    }, {
+                        wrapper: '#refreshAssesmentIcon',
+                        popup: {
+                            content: '#walkthrough-2',
+                            type: 'tooltip',
+                            position: 'top',
+                            width: '320',
+                            offsetHorizontal: 70
+                        },
+                        onEnter: BeforeWalkthroughStep,
+                        onLeave: AfterWalkthroughStep
+                    }, {
+                        wrapper: '#assessmentTab',
+                        popup: {
+                            content: '#walkthrough-3',
+                            type: 'modal'
+                        },
+                        onEnter: BeforeWalkthroughStep,
+                        onLeave: AfterWalkthroughStep
+                    }, {
+                        wrapper: '#convForm .options div+div',
+                        popup: {
+                            content: '#walkthrough-4',
+                            type: 'tooltip',
+                            position: 'top',
+                            offsetHorizontal: 30
+                        },
+                        onEnter: BeforeWalkthroughStep,
+                        onLeave: AfterWalkthroughStep
+                    }, {
+                        wrapper: '#userInput',
+                        popup: {
+                            content: '#walkthrough-5',
+                            type: 'tooltip',
+                            position: 'top',
+                            offsetHorizontal: 70
+                        },
+                        onEnter: BeforeWalkthroughStep,
+                        onLeave: AfterWalkthroughStep
+                    }, {
+                        wrapper: '.options',
+                        popup: {
+                            content: '#walkthrough-6',
+                            type: 'tooltip',
+                            position: 'top',
+                            offsetHorizontal: 1
+                        },
+                        onEnter: BeforeWalkthroughStep,
+                        onLeave: AfterWalkthroughStep
+                    }, {
+                        wrapper: '.submit',
+                        popup: {
+                            content: '#walkthrough-7',
+                            type: 'tooltip',
+                            position: 'left',
+                            width: '150',
+                            offsetHorizontal: 40
+                        },
+                        onEnter: BeforeWalkthroughStep,
+                        onLeave: AfterWalkthroughStep
+                    }, {
+                        wrapper: "h3:contains('Health Assessment')",
+                        popup: {
+                            content: '#walkthrough-8',
+                            type: 'tooltip',
+                            position: 'bottom',
+                            offsetHorizontal: -30
+                        },
+                        onEnter: BeforeWalkthroughStep,
+                        onLeave: AfterWalkthroughStep
+                    }, {
+                        wrapper: "#doctorType + h5",
+                        popup: {
+                            content: '#walkthrough-9',
+                            type: 'tooltip',
+                            position: 'bottom',
+                            offsetHorizontal: 1
+                        },
+                        onEnter: BeforeWalkthroughStep,
+                        onLeave: AfterWalkthroughStep
+                    }, {
+                        wrapper: "#restartAssesment",
+                        popup: {
+                            content: '#walkthrough-10',
+                            type: 'tooltip',
+                            position: 'left',
+                            width: '150',
+                            offsetHorizontal: 30
+                        },
+                        onEnter: BeforeWalkthroughStep,
+                        onLeave: AfterWalkthroughStep
+                    }]
+                });
+                // Show the tour
+                $('body').pagewalkthrough('show');
+           }
+           
+           function getLangResources(){
+                // Define arrays how many language you want to translate
+                var hn = new Array();
+                var en = new Array();
+            
+                hn['title'] = "AI4Rx: आपका स्वास्थ्य जिन्न"; 
+                en['title'] = "AI4Rx: Your Health Genie";
+                
+                hn['tab1'] = "मूल्यांकन"; 
+                en['tab1'] = "Assessment";
+                
+                hn['tab2'] = "सारांश"; 
+                en['tab2'] = "Summary";
+            
+                hn['subtitle1'] = "कृत्रिम बुद्धिमत्तापूर्ण अनुकूली स्वास्थ्य"; 
+                en['subtitle1'] = "AI Adaptive Health";
+            
+                hn['subtitle2'] = "कृत्रिम बुद्धिमत्ता इंटरेक्शन स्वास्थ्य आकलन"; 
+                en['subtitle2'] = "AI Driven Interactive Health Assessment";
+                
+                hn['summaryTitle'] = "स्वास्थ का मूल्यांकन"; 
+                en['summaryTitle'] = "Health Assessment";
+                
+                hn['summarySubtitle'] = "कृत्रिम बुद्धिमत्ता इंटरेक्शन स्वास्थ्य आकलन"; 
+                en['summarySubtitle'] = "AI Driven Interactive Health Assessment";
+            
+                hn['start'] = "मूल्यांकन शुरू करें"; 
+                en['start'] = "Start Assessment";
+                
+                hn['reassess'] = '<i class="zmdi zmdi-replay zmd-2x"></i>पुनर्मूल्यांकन'; 
+                en['reassess'] = '<i class="zmdi zmdi-replay zmd-2x"></i>Reassess';
+                
+                hn['reassess1'] = '<i class="zmdi zmdi-comments zmd-1x"></i> पुनर्मूल्यांकन'; 
+                en['reassess1'] = '<i class="zmdi zmdi-comments zmd-1x"></i> Reassess';
+                
+                hn['chatStart'] = 'नमस्कार! मैं AI4Rx BOT हूं, स्वास्थ्य आकलन के लिए आपका AI सहायक। निम्नलिखित प्रश्नों के लिए सर्वश्रेष्ठ उत्तर चुनें'; 
+                en['chatStart'] = "Hello! I am AI4Rx BOT, your AI assistant for health assessment. Choose the best answer for the following questions";
+         
+                hn['chatOpt1'] = 'अभी नहीं'; 
+                en['chatOpt1'] = 'Not now';
+                
+                hn['chatOpt2'] = 'ज़रूर!'; 
+                en['chatOpt2'] = 'Sure!';
+         
+                hn['help'] = '<i class="zmdi zmdi-help ui-pull-left"></i> एप्प की मदद'; 
+                en['help'] = '<i class="zmdi zmdi-help ui-pull-left"></i> App Walkthrough/Help';
+         
+                hn['reDoAssesment'] = '<i class="zmdi zmdi-comments ui-pull-left"></i> स्वास्थ्य की जांच'; 
+                en['reDoAssesment'] = '<i class="zmdi zmdi-comments ui-pull-left"></i>  Health Assessment';
+         
+                hn['reDoSummary'] = '<i class="zmdi zmdi-file ui-pull-left"></i> स्वास्थ्य सारांश'; 
+                en['reDoSummary'] = '<i class="zmdi zmdi-file ui-pull-left"></i> Health Summary';
+         
+                hn['log'] = 'आकलन लॉग'; 
+                en['log'] = 'Assessment Log';
+         
+                hn['doctor'] = 'चिकित्सक: '; 
+                en['doctor'] = 'Doctor:';
+         
+                hn['test'] = 'परीक्षण: '; 
+                en['test'] = 'Tests:';
+         
+                hn['disease'] = 'संभावित बीमारी: '; 
+                en['disease'] = 'Likely Ailment:';
+                
+                // Added new array defined arrays.
+                var resources = new Array();
+                resources['hn'] = hn;
+                resources['en'] = en;
+                
+                return resources;
+           }
+            
+           function changeLanguage(lng){
+                var resources = getLangResources()[lng];
+                
+                $("h1[lang='translate']").each(function(i, elt){
+                    $(elt).text(resources[$(elt).attr("caption")]);
+                });
+                $("h3[lang='translate']").each(function(i, elt){
+                    $(elt).text(resources[$(elt).attr("caption")]);
+                });
+                $("h4[lang='translate']").each(function(i, elt){
+                    $(elt).text(resources[$(elt).attr("caption")]);
+                });                
+                $("h5[lang='translate']").each(function(i, elt){
+                    $(elt).text(resources[$(elt).attr("caption")]);
+                });
+                $("li[lang='translate']").each(function(i, elt){
+                    $(elt).text(resources[$(elt).attr("caption")]);
+                });
+                $("a[lang='translate']").each(function(i, elt){
+                    $(elt).html(resources[$(elt).attr("caption")]);
+                });
+                $("button[lang='translate']").each(function(i, elt){
+                    $(elt).html(resources[$(elt).attr("caption")]);
+                });                
+                $("select[lang='translate']").each(function(i, elt){
+                    $(elt).attr('data-conv-question',resources[$(elt).attr("caption")]);
+                });
+                $("option[lang='translate']").each(function(i, elt){
+                    $(elt).text(resources[$(elt).attr("caption")]);
+                });
+           }
+         
+           function WelcomeBoT() {
+                var count = 0;
+                var result;
+                var sqn = "";
+                var currentQuestion = "";
+                var currentAnswer = "";
+                var qtxt = "";
+                var answerType = "select";
+                var NoAnswer = false;
+                var multiType = false;
+                var QnAnswered = false;
+                var options = [];
+                var chatOptions = [];
+                var label = "L1";
+                var profile = {};
+                var done = false;
+                var convForm = $("#welcomechat").convform({
+                    eventList: {
+                        onInputSubmit: async function(convState, ready) {
+                            //currentQuestion = convState.current.input.questions[0].substring(2,convState.current.input.questions[0].length);
+                            currentQuestion = convState.current.input.name;
+                            if (convState.current.answer.length > 0) {
+                                currentAnswer = convState.current.answer;
+                            } else {
+                                currentAnswer = convState.current.answer.value;
+                            }
+                            if (currentAnswer === "end") {
+                                //convState.current.next = false;
+                                //setTimeout(ready, Math.random() * 500 + 100);
+                                convState.current.next = convState.newState({
+                                    type: '',
+                                    name: "dynamic-question-" + 0,
+                                    questions: ['BYE BYE'],
+                                    answers: ''
+                                });
+                                setTimeout(ready, Math.random() * 500 + 100);
+                            } else {
+                                ToggleChatSpinLoader('hide');
+                                options = [];
+                                ToggleChatInput('hide');
+                                answerType = "select";
+                                multiType = false;
+                                NoAnswer = false;
+                                
+                                if($scope.kProfile){
+                                    if (count == 0) {
+                                        ChatOptionsAdjustment();
+                                        sqn = 'START';
+                                        if($scope.uProfile.type == 'doctor' && currentAnswer == 'config'){
+                                            multiType = true;
+                                            ToggleChatInput('multiple');
+                                            qtxt = "Please select the diseases that you would like your patients to be assessed on.";
+                						    options.push({text: 'IBS', value: 'IBS'});
+                						    options.push({text: 'GERD', value: 'GERD'});
+                						    options.push({text: 'Acute Infectious Diarrhea', value: 'AcuteInfectiousDiarrhea'});
+                						    options.push({text: 'Giardiasis_AID', value: 'Giardiasis_AID'});
+                						    options.push({text: 'PUD', value: 'PUD'});
+                						    options.push({text: 'Gastritis', value: 'Gastritis'});
+                						    options.push({text: 'Typhoid Fever', value: 'TyphoidFever'});
+                						    options.push({text: 'Ulcerative Colitis', value: 'UlcerativeColitis'});
+                						    options.push({text: 'Malabsorption', value: 'MalabsorptionS'});
+                						    options.push({text: 'AcPancreatitis', value: 'AcPancreatitis'});
+                						    options.push({text: 'Appendicitis', value: 'AppendicitisDisease'});
+                						    options.push({text: 'Intestinal TB', value: 'IntestinalTB'});
+                						    options.push({text: 'Hepatitis', value: 'Hepatitis'});
+                						    options.push({text: 'Jaundice', value: 'Jaundice'});
+                						    options.push({text: 'GallBladderStone', value: 'GallBladderStone'});
+                						    options.push({text: 'Liver Abscess', value: 'LiverAbscess'});
+                						    options.push({text: 'GB Inflammation', value: 'GBInflammation'});
+                						    options.push({text: 'GI Bleed', value: 'GIBleed'});
+                						    options.push({text: 'Colitis', value: 'ColitisDisease'});
+                						    options.push({text: 'Hemorrhoid', value: 'Hemorrhoid'});
+                						    options.push({text: 'Anal Diseases', value: 'AnalDiseases'});                                            
+                                        }else if($scope.uProfile.type == 'patient' && currentAnswer == 'config'){
+                                            qtxt = "Choose you preferred language";
+                						    options.push({text: 'English', value: 'en'});
+                                            
+                                        }else if($scope.uProfile.type == 'patient' && currentAnswer == 'proceed'){
+                                            qtxt = "Great !! Let's get started with your health assessment.";
+                						    options.push({text: 'Start !', value: 'start'});
+                                        }else if($scope.uProfile.type == 'doctor' && currentAnswer == 'proceed'){
+                                            qtxt = "Great !! Dr let's get started with your health assessment.";
+                						    options.push({text: 'Start !', value: 'start'});
+                                        }
+                                    } else if (count == 1) {
+                                        $scope.FirstStyleStep = 0;
+                                        if($scope.uProfile.type == 'doctor' && currentAnswer != 'start'){
+                                            $scope.uProfile.profiledDiseases = currentAnswer;
+                                            qtxt = "Great!! App configured for health assessment of your patients.";
+                                            options.push({text: 'Start !', value: 'start'});
+                                         }else if($scope.uProfile.type == 'patient' && currentAnswer != 'start'){
+                                            $scope.uProfile.lang = currentAnswer;
+                                            qtxt = "Great !! Get started with your health assessment.";
+                                            options.push({text: 'Start !', value: 'start'});
+                                        }else{
+                                            qtxt = "Would you want me to start the health assessment or want to do it yourself?";
+                                            options.push({text: 'Start Assessment!', value: 'assessemnt'});
+                                            options.push({text: 'Want to do it myself', value: 'myself'});
+                                            count++;
+                                        }
+                                    } else if (count == 2) {
+                                        qtxt = "Would you want me to start the health assessment or want to do it yourself?";
+                                        options.push({text: 'Start Assessment!', value: 'assessemnt'});
+                                        options.push({text: 'Want to do it myself', value: 'myself'});
+                                        
+                                    } else if (count == 3) {
+                                        if(currentAnswer == 'assessemnt'){
+                                            runtimeConfig.chatDIVStartHTML = '<form action="" method="GET" class="hidden"><select data-conv-question="☊ Starting AI4RX health assessment. Please choose the best answer for the assessment questions." name="first-question"><option value="Sure">Understood!</option></select></form>';
+                                            runtimeConfig.profiledDiseases = $scope.uProfile.profiledDiseases;
+                                            $scope.FirstStyleStep = 1;
+                                            $scope.lastStyleMargin = 1000;
+                                            RefreshAssesment();
+                                        }else{
+                                            runtimeConfig.chatDIVStartHTML = '<form action="" method="GET" class="hidden"><select data-conv-question="☊ Hello! I am AI4RX Bot, your AI assistant for health assessment. Please choose the best answer for the assessment questions." name="first-question"><option value="end">Not now</option><option value="Sure">Sure!</option></select></form>';
+                                            runtimeConfig.profiledDiseases = $scope.uProfile.profiledDiseases;
+                                            $scope.FirstStyleStep = 1;
+                                            $scope.lastStyleMargin = 1000;
+                                            $scope.ResetApp();
+                                        }
+                                        done = true;
+                                    }                                    
+                                }else{
+                                    if (count == 0) {
+                                        ChatOptionsAdjustment();
+                                        sqn = "first";
+                                        qtxt = "Choose you preferred language";
+                						options.push({text: 'English', value: 'en'});
+                                    } else if (count == 1) {
+                                        $scope.FirstStyleStep = 0;
+                                        $scope.uProfile.lang = currentAnswer;
+                                        sqn = 'START';
+                                        qtxt = "Are you a Doctor or Patient";
+                						options.push({text: 'Doctor', value: 'doctor'});
+                						options.push({text: 'Patient', value: 'patient'});
+                                    } else if (count == 2) {
+                                        sqn = count;
+                                        answerType = "input";
+                                        $scope.uProfile.type = currentAnswer;
+                                        ToggleChatInput('show');
+                                        if($scope.uProfile.type == 'doctor'){
+                                            qtxt = "Dr please enter your name";
+                                        }else{
+                                            qtxt = "Please enter your name";
+                                        }
+                                    } else if (count == 3) {
+                                        sqn = count;
+                                        answerType = "input";
+                                        ToggleChatInput('show');
+                                        $scope.uProfile.name = currentAnswer;
+                                        qtxt = "Please enter your email address";
+                                    } else if (count == 4) {
+                                        sqn = count;
+                                        $scope.uProfile.email = currentAnswer;
+                                        if($scope.uProfile.type == 'doctor'){
+                                            qtxt = "Do you want to configure the diseases for assessing your patients?";
+                                        }else{
+                                            qtxt = "Do you want to take the walkthrough tour on how to use the app?";
+                                        }
+                						options.push({text: 'Yes', value: 'yes'});
+                						options.push({text: 'No', value: 'no'});
+                                        
+                                    } else if (count == 5) {
+                                        sqn = count;
+                                        if($scope.uProfile.type == 'doctor' && currentAnswer == 'no'){
+                                            qtxt = "Great!! App configured for health assessment of your patients.";
+                                            done = true;
+                                            $scope.FirstStyleStep = 1;
+                                            $scope.lastStyleMargin = 1000;
+                                            $scope.ResetApp();
+                                        }else if($scope.uProfile.type == 'doctor' && currentAnswer == 'yes'){
+                                            multiType = true;
+                                            ToggleChatInput('multiple');
+                                            qtxt = "Please select the diseases that you would like your patients to be assessed on.";
+                						    options.push({text: 'IBS', value: 'IBS'});
+                						    options.push({text: 'GERD', value: 'GERD'});
+                						    options.push({text: 'Acute Infectious Diarrhea', value: 'AcuteInfectiousDiarrhea'});
+                						    options.push({text: 'Giardiasis_AID', value: 'Giardiasis_AID'});
+                						    options.push({text: 'PUD', value: 'PUD'});
+                						    options.push({text: 'Gastritis', value: 'Gastritis'});
+                						    options.push({text: 'Typhoid Fever', value: 'TyphoidFever'});
+                						    options.push({text: 'Ulcerative Colitis', value: 'UlcerativeColitis'});
+                						    options.push({text: 'Malabsorption', value: 'MalabsorptionS'});
+                						    options.push({text: 'AcPancreatitis', value: 'AcPancreatitis'});
+                						    options.push({text: 'Appendicitis', value: 'AppendicitisDisease'});
+                						    options.push({text: 'Intestinal TB', value: 'IntestinalTB'});
+                						    options.push({text: 'Hepatitis', value: 'Hepatitis'});
+                						    options.push({text: 'Jaundice', value: 'Jaundice'});
+                						    options.push({text: 'GallBladderStone', value: 'GallBladderStone'});
+                						    options.push({text: 'Liver Abscess', value: 'LiverAbscess'});
+                						    options.push({text: 'GB Inflammation', value: 'GBInflammation'});
+                						    options.push({text: 'GI Bleed', value: 'GIBleed'});
+                						    options.push({text: 'Colitis', value: 'ColitisDisease'});
+                						    options.push({text: 'Hemorrhoid', value: 'Hemorrhoid'});
+                						    options.push({text: 'Anal Diseases', value: 'AnalDiseases'});
+                						    
+                                        }else if($scope.uProfile.type == 'patient' && currentAnswer == 'no'){
+                                            qtxt = "Great !! Get started with your health assessment.";
+                                            done = true;
+                                            $scope.FirstStyleStep = 1;
+                                            $scope.lastStyleMargin = 1000;
+                                            $scope.ResetApp();
+                                        }else if($scope.uProfile.type == 'patient' && currentAnswer == 'yes'){
+                                            qtxt = "Starting the walkthrough tour of the App.";
+                                            done = true;
+                                            $scope.FirstStyleStep = 1;
+                                            $scope.lastStyleMargin = 1000;
+                                            $scope.ResetApp();
+                                            $scope.WalkthroughHelp();
+                                        }
+                                    } else if (count == 6) {
+                                        sqn = count;
+                                        $scope.uProfile.profiledDiseases = currentAnswer;
+                                        runtimeConfig.profiledDiseases = $scope.uProfile.profiledDiseases;
+                                        $scope.FirstStyleStep = 1;
+                                        $scope.lastStyleMargin = 1000;
+                                        if($scope.uProfile.type == 'doctor'){
+                                            qtxt = "Great!! App configured for health assessment of your patients.";
+                                            done = true;
+                                            $scope.ResetApp();
+                                        }else{
+                                        }
+                                    }
+                                    
+                                }
+                                
+                                chatOptions = new Array();
+                                for (var x in options) {
+                                    optionData = {};
+                                    optionData["text"] = options[x].text;
+                                    optionData["value"] = options[x].value;
+                                    chatOptions.push(optionData);
+                                }
+                                
+                                convState.current.next = convState.newState({
+                                    type: answerType,
+                                    noAnswer: NoAnswer,
+                                    multiple: multiType,
+                                    name: "dynamic-question-" + count,
+                                    questions: [qtxt],
+                                    answers: chatOptions
+                                });
+                                setTimeout(ready, Math.random() * 500 + 100);
+                                count++;
+                                
+                                if(done){
+                                    $('#welcomechat').hide();
+                                    $('#welcomechat').html('');
+                                    // Store
+                                    var ai4rxObject = { 'ai4rx': 'accessed', "profile":$scope.uProfile };
+                                    localStorage.setItem("ai4rx",JSON.stringify(ai4rxObject));
+                                }
+                            }
+                        }
+                    }
+                });
+           }
+         
            $(document).ready(function() {
-
+                appScope = getScope("MainController");
+                
+                if(navigator.serviceWorker !== undefined) {
+                 navigator.serviceWorker
+                 .register('service-worker.js')
+                 .then(function() { console.log("Service Worker Registered"); })
+                 .catch(function(err){
+                 console.error(err);
+                 });
+                }            
+                
+                
+                var urlParams = getParams(window.location.href);
+                if(urlParams.reset){
+                    localStorage.removeItem("ai4rx"); 
+                }
+                // Check browser support
+                if (typeof(Storage) !== "undefined") {
+                    if(localStorage.getItem("ai4rx")){
+                        // Retrieve
+                        var retrievedObject = localStorage.getItem("ai4rx");
+                        var ai4rxObj = JSON.parse(retrievedObject);
+                        $scope.kProfile = true;
+                        $scope.uProfile = ai4rxObj.profile;
+                        
+                        changeLanguage("en");
+                        $('#loggedProfile').html($scope.uProfile.name);
+                        
+                        convForm = $('#welcomechat form');
+                        convForm.html('<select data-conv-question="☊ Welcome back '+$scope.uProfile.name+'! Do you want to proceed with health assessment or configure the App?" name="first-question" lang="translate" caption="chatStart"><option value="proceed" lang="translate" caption="chatOpt3">Health Assessment!</option><option value="config" lang="translate" caption="chatOpt4">App Configuration!</option></select></select>');
+                        //userInputAdjustment("conv-form-wrapper",0);
+                        //userInputAdjustment("welcomechat",0);
+                        //userInputAdjustment("chat",1);
+                        //WelcomeBoT();
+                        //RefreshAssesment();
+                        
+                        $("#tr_button").click(function(){
+                            changeLanguage("hn");
+                        });
+                    
+                        $("#eng_button").click(function(){
+                            changeLanguage("en");
+                        });                        
+                    }else{
+                        // Default Language
+                        changeLanguage("en");
+                        //userInputAdjustment();
+                        //WelcomeBoT();
+                        //RefreshAssesment();
+                        //$scope.WalkthroughHelp();
+                    }
+                } else {
+                  //document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+                }               
            });           
            
          });		
